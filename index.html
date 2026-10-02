@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Use Case Register — clickable prototype (fictional data)</title>
+<meta name="description" content="Validation prototype for an operational evidence layer for employment AI. Fictional data only. Not legal advice.">
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#fff; --ink:#0f172a; --ink2:#334155; --muted:#5b6775;
+  --line:#e3e7ec; --line2:#cbd3dc;
+  --brand:#1d4ed8; --brand-ink:#17368f; --brand-soft:#eef2ff; --brand-line:#c3cdf7;
+  --ok:#15803d; --ok-bg:#eaf6ee; --ok-line:#bcdfc8;
+  --warn:#8a4708; --warn-bg:#fdf3e3; --warn-line:#eccfa3;
+  --bad:#b91c1c; --bad-bg:#fdecec; --bad-line:#f0bcbc;
+  --neu:#475569; --neu-bg:#f1f5f9; --neu-line:#d5dde6;
+  --r:8px; --r-sm:4px; --shadow:0 1px 2px rgba(15,23,42,.05);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/22px var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--brand)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:var(--r-sm)}
+.skip{position:absolute;left:8px;top:-48px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:8px 14px;z-index:99;transition:top .12s}
+.skip:focus{top:8px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- chrome ---------- */
+.topbar{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.topbar .in{max-width:1440px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;gap:16px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:660;letter-spacing:-.01em;font-size:15px}
+.mark .glyph{width:26px;height:26px;border-radius:6px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.mark small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.02em}
+.org{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);font-size:13px;color:var(--ink2);cursor:default}
+.org b{font-weight:600;color:var(--ink)}
+.org span{color:var(--muted);font-size:12px}
+.grow{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:12px;line-height:18px;font-weight:600;border:1px solid transparent;white-space:nowrap}
+.chip.proto{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+.chip.rule{background:var(--neu-bg);border-color:var(--neu-line);color:var(--neu);font-family:var(--mono);font-weight:500;font-size:11.5px}
+.who{display:flex;align-items:center;gap:8px;font-size:13px}
+.who .av{width:28px;height:28px;border-radius:999px;background:var(--brand-soft);border:1px solid var(--brand-line);color:var(--brand-ink);display:grid;place-items:center;font-size:11px;font-weight:700}
+.who small{display:block;color:var(--muted);font-size:11px;line-height:14px}
+.who b{font-weight:600;font-size:12.5px;line-height:15px;display:block}
+
+/* boundary strip — always on screen, never only in a footer */
+.boundary{background:#0f172a;color:#e8ecf3;position:sticky;top:60px;z-index:29}
+.boundary .in{max-width:1440px;margin:0 auto;padding:7px 32px;display:flex;gap:10px;align-items:center;font-size:12.5px;line-height:18px}
+.boundary strong{color:#fff;font-weight:650}
+.boundary .dot{width:6px;height:6px;border-radius:999px;background:#f59e0b;flex:none}
+
+.shell{max-width:1440px;margin:0 auto;padding:0 32px;display:flex;gap:32px;align-items:flex-start}
+.side{width:232px;flex:none;padding:24px 0 40px;position:sticky;top:104px}
+.side .lbl{font-size:11px;font-weight:660;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 10px;margin:0 0 8px}
+.side nav{display:flex;flex-direction:column;gap:2px;margin-bottom:24px}
+.side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);text-decoration:none;color:var(--ink2);font-size:13.5px;font-weight:500}
+.side a:hover{background:#eef1f5}
+.side a[aria-current="page"]{background:var(--brand-soft);color:var(--brand-ink);font-weight:640}
+.side a .n{margin-left:auto;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.side a[aria-current="page"] .n{color:var(--brand-ink)}
+.side .maint{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:12px;font-size:12px;line-height:18px;color:var(--muted)}
+.side .maint b{display:block;color:var(--ink);font-size:12px;margin-bottom:4px}
+
+main{flex:1;min-width:0;padding:24px 0 120px}
+.screen{display:none}
+.screen.on{display:block}
+
+/* ---------- primitives ---------- */
+.head{display:flex;align-items:flex-start;gap:16px;margin:0 0 20px}
+.head h1{font-size:26px;line-height:34px;letter-spacing:-.01em;font-weight:660;margin:0 0 4px}
+.head p.sub{margin:0;color:var(--muted);font-size:13.5px;max-width:74ch}
+.crumb{font-size:12px;color:var(--muted);margin:0 0 6px}
+.crumb a{text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--panel);border-radius:var(--r);padding:8px 14px;font-size:13.5px;font-weight:560;cursor:pointer;box-shadow:var(--shadow);text-decoration:none;color:var(--ink)}
+.btn:hover{background:#f8fafc}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:none}
+.btn.pri:hover{background:#1a44bd}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow-x:auto}
+.card>.ch{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.card>.ch h2{font-size:15px;font-weight:640;margin:0}
+.card>.ch p{margin:2px 0 0;font-size:12.5px;color:var(--muted)}
+.card>.cb{padding:18px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:0 0 20px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.tile .k{font-size:11px;font-weight:660;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.tile .v{font-size:30px;line-height:34px;font-weight:660;letter-spacing:-.02em;margin:0}
+.tile .m{margin:4px 0 0;font-size:12px;color:var(--muted)}
+
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+thead th{text-align:left;font-size:11px;font-weight:660;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--line2);white-space:nowrap;background:#fbfcfd}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.rowlink{cursor:pointer}
+tbody tr.rowlink:hover{background:#f8fafc}
+td .t1{font-weight:600;font-size:13.5px;display:block}
+td .t2{color:var(--muted);font-size:12px;display:block;margin-top:2px}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 9px;font-size:12px;line-height:18px;font-weight:600;border:1px solid;white-space:nowrap}
+.pill .g{font-size:10px;line-height:1}
+.pill.ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);border-color:var(--warn-line);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad)}
+.pill.neu{background:var(--neu-bg);border-color:var(--neu-line);color:var(--neu)}
+.pill.brand{background:var(--brand-soft);border-color:var(--brand-line);color:var(--brand-ink)}
+.role{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-sm);padding:3px 8px;font-size:12px;line-height:18px;font-weight:600;border:1px solid}
+.role.informs{background:var(--neu-bg);border-color:var(--neu-line);color:var(--neu)}
+.role.ranks{background:var(--brand-soft);border-color:var(--brand-line);color:var(--brand-ink)}
+.role.decides{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad)}
+
+.bar{width:104px;height:6px;border-radius:999px;background:#e8ecf1;overflow:hidden;display:block}
+.bar i{display:block;height:100%;background:var(--ok)}
+.bar.part i{background:var(--warn)}
+.bar.low i{background:var(--bad)}
+
+.toolbar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:var(--r);padding:6px 10px;background:var(--panel);min-width:260px}
+.search input{border:0;outline:0;font:inherit;font-size:13px;width:100%;background:transparent}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{border:1px solid var(--line2);background:var(--panel);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:560;cursor:pointer;color:var(--ink2)}
+.fchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+details.cite{margin-top:6px}
+details.cite>summary{cursor:pointer;font-size:12px;color:var(--brand);font-weight:560;list-style:none;display:inline-flex;align-items:center;gap:5px}
+details.cite>summary::-webkit-details-marker{display:none}
+details.cite>summary::before{content:"›";display:inline-block;transition:transform .12s;font-size:14px}
+details.cite[open]>summary::before{transform:rotate(90deg)}
+details.cite .body{margin-top:8px;border-left:2px solid var(--brand-line);padding:8px 0 8px 12px;font-size:12.5px;line-height:19px;color:var(--ink2);max-width:82ch}
+details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:6px}
+
+.alert{display:flex;gap:12px;border:1px solid;border-radius:var(--r);padding:12px 14px;font-size:13px;line-height:20px}
+.alert .ai{flex:none;width:20px;height:20px;border-radius:999px;display:grid;place-items:center;font-size:12px;font-weight:700}
+.alert.bad{background:var(--bad-bg);border-color:var(--bad-line);color:#7f1d1d}
+.alert.bad .ai{background:var(--bad);color:#fff}
+.alert.warn{background:var(--warn-bg);border-color:var(--warn-line);color:#6b3505}
+.alert.warn .ai{background:var(--warn);color:#fff}
+.alert.info{background:var(--brand-soft);border-color:var(--brand-line);color:var(--brand-ink)}
+.alert.info .ai{background:var(--brand);color:#fff}
+.alert b{font-weight:650}
+
+/* ---------- register detail ---------- */
+.two{display:grid;grid-template-columns:1fr 344px;gap:20px;align-items:start}
+.kv{display:grid;grid-template-columns:200px 1fr;gap:0}
+.kv dt{padding:11px 0;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);font-weight:560}
+.kv dd{padding:11px 0;border-top:1px solid var(--line);margin:0;font-size:13.5px}
+.kv dt:first-of-type,.kv dd:first-of-type{border-top:0}
+.kv dd .t2{color:var(--muted);font-size:12px;display:block;margin-top:2px}
+.spine{border:1px solid var(--brand-line);background:linear-gradient(180deg,#f7f9ff,#fff);border-radius:var(--r);padding:18px;margin:0 0 20px}
+.spine .k{font-size:11px;font-weight:660;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-ink);margin:0 0 10px}
+.spine .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+.opt{border:1px solid var(--line2);background:var(--panel);border-radius:var(--r);padding:12px;text-align:left}
+.opt .on{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:620}
+.opt .ox{width:16px;height:16px;border-radius:999px;border:1.5px solid var(--line2);flex:none;display:grid;place-items:center}
+.opt .od{margin:6px 0 0;font-size:12px;line-height:18px;color:var(--muted)}
+.opt[data-sel="true"]{border-color:var(--brand);box-shadow:0 0 0 3px rgba(29,78,216,.10);background:#fff}
+.opt[data-sel="true"] .ox{border-color:var(--brand);background:var(--brand)}
+.opt[data-sel="true"] .ox::after{content:"";width:6px;height:6px;border-radius:999px;background:#fff}
+.opt[data-sel="true"] .on{color:var(--brand-ink)}
+
+/* ---------- triage ---------- */
+.tri{display:grid;grid-template-columns:266px 1fr;gap:24px;align-items:start}
+.rail{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:8px;box-shadow:var(--shadow)}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail li{margin:0}
+.rail button{width:100%;display:flex;gap:10px;align-items:flex-start;background:transparent;border:0;border-radius:var(--r-sm);padding:9px 10px;text-align:left;cursor:pointer}
+.rail button:hover{background:#f4f6f9}
+.rail button[aria-current="step"]{background:var(--brand-soft)}
+.rail .sn{flex:none;width:20px;height:20px;border-radius:999px;border:1.5px solid var(--line2);font-size:11px;font-weight:700;display:grid;place-items:center;color:var(--muted);background:#fff}
+.rail button[aria-current="step"] .sn{border-color:var(--brand);background:var(--brand);color:#fff}
+.rail .sd[data-done="true"]{border-color:var(--ok);background:var(--ok);color:#fff}
+.rail .st{font-size:12.5px;line-height:17px;font-weight:560;color:var(--ink2)}
+.rail button[aria-current="step"] .st{color:var(--brand-ink);font-weight:640}
+.step h2{font-size:20px;line-height:28px;font-weight:650;margin:0 0 6px;letter-spacing:-.01em}
+.step .plain{margin:0 0 16px;color:var(--muted);font-size:13px}
+.ans{display:flex;flex-direction:column;gap:8px;margin:0 0 4px}
+.ans .a{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line2);border-radius:var(--r);padding:11px 12px;background:var(--panel);font-size:13.5px}
+.ans .a .ox{width:16px;height:16px;border-radius:999px;border:1.5px solid var(--line2);flex:none;margin-top:3px;display:grid;place-items:center}
+.ans .a[data-sel="true"]{border-color:var(--brand);background:#f7f9ff}
+.ans .a[data-sel="true"] .ox{border-color:var(--brand);background:var(--brand)}
+.ans .a[data-sel="true"] .ox::after{content:"";width:6px;height:6px;border-radius:999px;background:#fff}
+.ind{display:flex;gap:10px;align-items:flex-start;margin-top:14px;border:1px dashed var(--line2);border-radius:var(--r);padding:11px 12px;background:#fbfcfd;font-size:13px;line-height:20px}
+.ind b{font-weight:650}
+.navrow{display:flex;gap:10px;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.provs{display:flex;flex-wrap:wrap;gap:6px}
+.provs .p{font-family:var(--mono);font-size:11.5px;background:var(--neu-bg);border:1px solid var(--neu-line);color:var(--neu);border-radius:var(--r-sm);padding:2px 7px}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.track{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:#fbfcfd}
+.track h3{margin:0 0 8px;font-size:12.5px;font-weight:660;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.track ul{margin:0;padding-left:18px;font-size:13px;line-height:21px}
+.confirm{border:1px solid var(--line2);border-radius:var(--r);padding:16px;background:#fbfcfd;margin-top:16px}
+.confirm label{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:20px;cursor:pointer}
+.confirm input{margin-top:3px;width:16px;height:16px;accent-color:var(--brand)}
+.stamp{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--ok-line);background:var(--ok-bg);border-radius:var(--r);padding:14px;margin-top:16px;font-size:13px;line-height:20px;color:#14532d}
+.stamp .ai{flex:none;width:22px;height:22px;border-radius:999px;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+
+/* ---------- export ---------- */
+.xgrid{display:grid;grid-template-columns:1fr 372px;gap:20px;align-items:start}
+.cl{display:flex;flex-direction:column;gap:2px}
+.cl label{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:var(--r-sm);font-size:13.5px;cursor:pointer}
+.cl label:hover{background:#f8fafc}
+.cl input{margin-top:4px;width:15px;height:15px;accent-color:var(--brand)}
+.cl .t2{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.cl input:disabled+span{color:var(--muted)}
+.prog{height:6px;border-radius:999px;background:#e8ecf1;overflow:hidden;margin:14px 0 8px}
+.prog i{display:block;height:100%;width:0;background:var(--brand);transition:width .45s linear}
+.file{display:flex;gap:12px;align-items:center;border:1px solid var(--ok-line);background:var(--ok-bg);border-radius:var(--r);padding:14px}
+.file .ic{flex:none;width:34px;height:42px;border:1px solid var(--ok-line);border-radius:3px;background:#fff;display:grid;place-items:center;font-size:9px;font-weight:700;color:var(--ok)}
+.file b{display:block;font-size:13px;font-weight:620;word-break:break-all}
+.file small{display:block;color:#14532d;font-size:12px;margin-top:3px}
+
+/* ---------- activity ---------- */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:150px 20px 1fr;gap:0;align-items:start}
+.tl .when{padding:12px 14px 12px 0;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.tl .axis{position:relative;display:flex;justify-content:center}
+.tl .axis::before{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.tl li:first-child .axis::before{top:18px}
+.tl li:last-child .axis::before{bottom:calc(100% - 18px)}
+.tl .dot{position:relative;margin-top:16px;width:9px;height:9px;border-radius:999px;background:#fff;border:2px solid var(--line2)}
+.tl li[data-kind="confirm"] .dot{border-color:var(--ok)}
+.tl li[data-kind="rule"] .dot{border-color:var(--brand)}
+.tl li[data-kind="export"] .dot{border-color:var(--brand)}
+.tl .what{padding:12px 0 12px 14px;font-size:13.5px;line-height:21px}
+.tl .what .t2{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+
+/* ---------- demo path bar ---------- */
+.pathbar{position:fixed;left:0;right:0;bottom:0;background:var(--panel);border-top:1px solid var(--line2);z-index:40;box-shadow:0 -4px 16px rgba(15,23,42,.06)}
+.pathbar .in{max-width:1440px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;gap:16px}
+.pathbar .lab{font-size:11px;font-weight:660;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.dots{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.dots a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:12px;color:var(--muted);padding:3px 8px;border-radius:999px;border:1px solid transparent}
+.dots a:hover{background:#f1f4f8;color:var(--ink2)}
+.dots a[aria-current="true"]{background:var(--ink);color:#fff;font-weight:600}
+.dots .sep{color:var(--line2);font-size:12px}
+
+.smallnote{display:none}
+@media (max-width:1100px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .two,.xgrid{grid-template-columns:1fr}
+  .tri{grid-template-columns:1fr}
+  .tracks{grid-template-columns:1fr}
+}
+@media (max-width:1180px){
+  .side{display:none}
+  .shell{padding:0 24px}
+}
+@media (max-width:900px){
+  .smallnote{display:flex;gap:10px;background:var(--warn-bg);border-bottom:1px solid var(--warn-line);color:#6b3505;padding:8px 16px;font-size:12.5px}
+  .shell{padding:0 16px}
+}
+@media print{.pathbar,.side,.topbar{display:none}}
+
+/* --- additions for the pack-aligned data model --- */
+/* severity: medium-high, needed to carry the evidence pack's own scale */
+.pill.mh{background:#fdeee3;border-color:#f0c4a3;color:#9a3d12}
+.notinc{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:#fbfcfd;font-size:12.5px;line-height:19px;color:var(--ink2)}
+.notinc b{display:block;color:var(--ink);font-size:12.5px;margin-bottom:6px}
+.notinc ul{margin:0;padding-left:18px}
+.fict{background:var(--warn-bg);border:1px solid var(--warn-line);color:#6b3505;border-radius:var(--r);padding:10px 14px;font-size:12.5px;line-height:19px;margin:0 0 18px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<p class="smallnote"><strong>Laptop screen recommended.</strong> This prototype is designed desktop-first at 1280px or wider.</p>
+
+<header class="topbar">
+  <div class="in">
+    <div class="mark"><span class="glyph" aria-hidden="true">R</span><span>AI Use Case Register<small>working name · employment AI evidence layer</small></span></div>
+    <div class="org"><b>Stavenhorst Logistik GmbH</b><span>640 employees · DE + NL</span></div>
+    <span class="grow"></span>
+    <span class="chip proto">Prototype · fictional data</span>
+    <span class="chip rule" title="Rule pack version">Rule pack EU-EMPL-2026.09</span>
+    <div class="who"><span class="av" aria-hidden="true">SH</span><span><b>Sabine Hoffmann</b><small>Group Head of HR</small></span></div>
+  </div>
+</header>
+
+<div class="boundary">
+  <div class="in">
+    <span class="dot" aria-hidden="true"></span>
+    <span><strong>Operational evidence layer.</strong> Every classification result here is indicative, cites the provision it relies on, and requires confirmation by a named person. This is not legal advice, not a conformity assessment under Regulation (EU) 2024/1689, and carries no legal sign-off.</span>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <p class="lbl">Workspace</p>
+    <nav aria-label="Main">
+      <a href="#register" data-nav="register">Register <span class="n">5</span></a>
+      <a href="#gaps" data-nav="gaps">Gaps <span class="n">6</span></a>
+      <a href="#evidence" data-nav="evidence">Evidence <span class="n">9/12</span></a>
+      <a href="#export" data-nav="export">Exports</a>
+      <a href="#activity" data-nav="activity">Activity</a>
+    </nav>
+    <div class="maint">
+      <b>Maintained by two people</b>
+      Sabine Hoffmann (Group Head of HR) and Priya Nair (Group IT Systems Owner) share this register between them. No external consultant seat, no GRC programme.
+    </div>
+  </aside>
+
+  <main id="main" tabindex="-1">
+
+  <!-- ============ 1. REGISTER OVERVIEW ============ -->
+  <section class="screen" id="s-register" aria-labelledby="h-register">
+    <div class="head">
+      <div>
+        <p class="crumb">Stavenhorst Logistik GmbH · both entities</p>
+        <h1 id="h-register">AI use case register</h1>
+        <p class="sub">Every AI-enabled system that touches an employment decision: who owns it, what it actually decides, and whether you could show your working today.</p>
+      </div>
+      <span class="grow"></span>
+      <button class="btn">Review queue</button>
+      <button class="btn pri">Add use case</button>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><p class="k">Use cases</p><p class="v num">5</p><p class="m">4 in production · 1 pilot</p></div>
+      <div class="tile"><p class="k">Indicative high-risk</p><p class="v num">3</p><p class="m">2 confirmed · 1 awaiting confirmation</p></div>
+      <div class="tile"><p class="k">Open gaps</p><p class="v num">6</p><p class="m">2 high · 1 med-high · 1 medium · 2 low</p></div>
+      <div class="tile"><p class="k">Next 30 days</p><p class="v num">1</p><p class="m">review due · 1 use case never triaged</p></div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <div class="search"><span aria-hidden="true" style="color:var(--muted)">&#8981;</span><label class="vh" for="q-reg">Search use cases</label><input id="q-reg" type="search" placeholder="Search use case, system, owner&#8230;"></div>
+        <div class="chips" role="group" aria-label="Filter register">
+          <button class="fchip" aria-pressed="true" data-regf="all">All 5</button>
+          <button class="fchip" aria-pressed="false" data-regf="high">Indicative high-risk 3</button>
+          <button class="fchip" aria-pressed="false" data-regf="untriaged">Needs triage 1</button>
+          <button class="fchip" aria-pressed="false" data-regf="de">DE entity 4</button>
+          <button class="fchip" aria-pressed="false" data-regf="nl">NL entity 3</button>
+        </div>
+        <span class="grow"></span>
+        <button class="btn sm" data-go="export">Export register</button>
+      </div>
+      <table>
+        <caption class="vh">AI use cases at Stavenhorst Logistik GmbH, with entity, decision role, indicative risk, named owner, evidence completeness and next review date.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Use case</th>
+            <th scope="col">Entity</th>
+            <th scope="col">Decision role</th>
+            <th scope="col">Risk (indicative)</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Evidence</th>
+            <th scope="col">Next review</th>
+          </tr>
+        </thead>
+        <tbody id="tb-reg">
+          <tr class="rowlink" data-open="usecase" data-tags="high de nl" tabindex="0">
+            <td><span class="t1">AI-assisted CV screening</span><span class="t2">UC-001 · TalentSieve v3.2 · Orvenda AI B.V.</span></td>
+            <td>DE + NL</td>
+            <td><span class="role ranks">Ranks or filters candidates</span></td>
+            <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · confirmed by A. Cordes</span></td>
+            <td><span class="t1">Sabine Hoffmann</span><span class="t2">Group Head of HR</span></td>
+            <td><span class="bar part" role="img" aria-label="9 of 12 controls evidenced"><i style="width:75%"></i></span><span class="t2 num">9 of 12 evidenced</span></td>
+            <td><span class="num">2027-03-28</span><span class="t2">6-month cycle</span></td>
+          </tr>
+          <tr class="rowlink" data-tags="untriaged de" tabindex="0">
+            <td><span class="t1">Warehouse shift optimisation</span><span class="t2">UC-002 · Rotamira Shift Planner · Rotamira B.V.</span></td>
+            <td>DE</td>
+            <td><span class="role informs">Informs a human decision</span></td>
+            <td><span class="pill warn"><span class="g" aria-hidden="true">&#9650;</span>Needs triage</span><span class="t2">never triaged</span></td>
+            <td><span class="t1">Frank Oelkers</span><span class="t2">Warehouse Operations Manager</span></td>
+            <td><span class="bar low" role="img" aria-label="4 of 12 controls evidenced"><i style="width:33%"></i></span><span class="t2 num">4 of 12 evidenced</span></td>
+            <td><span class="num">2026-11-03</span><span class="t2">in 4 weeks</span></td>
+          </tr>
+          <tr class="rowlink" data-tags="high nl" tabindex="0">
+            <td><span class="t1">Structured interview scoring <span class="pill neu" style="margin-left:6px">Pilot</span></span><span class="t2">UC-003 · Kandidera Interview Insights · Kandidera Software GmbH</span></td>
+            <td>NL</td>
+            <td><span class="role ranks">Ranks or filters candidates</span></td>
+            <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · awaiting confirmation</span></td>
+            <td><span class="t1">Tomasz Werner</span><span class="t2">Recruiting Lead, NL</span></td>
+            <td><span class="bar low" role="img" aria-label="2 of 12 controls evidenced"><i style="width:17%"></i></span><span class="t2 num">2 of 12 evidenced</span></td>
+            <td><span class="num">2026-10-20</span><span class="t2" style="color:var(--bad);font-weight:600">due in 18 days</span></td>
+          </tr>
+          <tr class="rowlink" data-tags="high de nl" tabindex="0">
+            <td><span class="t1">Performance review analytics</span><span class="t2">UC-004 · Flintmoor Performance Signals · Flintmoor Digital GmbH</span></td>
+            <td>DE + NL</td>
+            <td><span class="role informs">Informs a human decision</span></td>
+            <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · confirmed by L. Bergmann</span></td>
+            <td><span class="t1">Liesbeth Maas</span><span class="t2">HRIS Lead, NL</span></td>
+            <td><span class="bar part" role="img" aria-label="6 of 12 controls evidenced"><i style="width:50%"></i></span><span class="t2 num">6 of 12 evidenced</span></td>
+            <td><span class="num">2027-01-12</span><span class="t2">in 15 weeks</span></td>
+          </tr>
+          <tr class="rowlink" data-tags="de" tabindex="0">
+            <td><span class="t1">Training recommendations</span><span class="t2">UC-005 · Orvenda Learning Paths · Orvenda AI B.V.</span></td>
+            <td>DE</td>
+            <td><span class="role informs">Informs a human decision</span></td>
+            <td><span class="pill ok"><span class="g" aria-hidden="true">&#10003;</span>Not high-risk</span><span class="t2">indicative · confirmed by P. Nair</span></td>
+            <td><span class="t1">Priya Nair</span><span class="t2">Group IT Systems Owner</span></td>
+            <td><span class="bar" role="img" aria-label="4 of 5 controls evidenced"><i style="width:80%"></i></span><span class="t2 num">4 of 5 evidenced</span></td>
+            <td><span class="num">2027-02-28</span><span class="t2">in 22 weeks</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Last change 2026-09-28 by Sabine Hoffmann. No row can be marked reviewed until it carries a named owner and a decision role. <a href="#usecase">Open UC-001</a> to see the entry behind a row.</p>
+  </section>
+
+  <!-- ============ 2. USE CASE DETAIL ============ -->
+  <section class="screen" id="s-usecase" aria-labelledby="h-usecase">
+    <div class="head">
+      <div>
+        <p class="crumb"><a href="#register">Register</a> &#8250; UC-001</p>
+        <h1 id="h-usecase">AI-assisted CV screening</h1>
+        <p class="sub">TalentSieve v3.2 recruitment-screening module · in production since 2026-06-15 · Stavenhorst Logistik GmbH (DE, Hamburg) and Stavenhorst Logistiek B.V. (NL, Rotterdam)</p>
+      </div>
+      <span class="grow"></span>
+      <button class="btn" data-go="evidence">Evidence checklist</button>
+      <button class="btn pri" data-go="triage">Open triage</button>
+    </div>
+
+    <div class="spine">
+      <p class="k">Decision role &#183; the field the whole record hangs on</p>
+      <div class="opts" role="radiogroup" aria-label="Decision role">
+        <div class="opt" data-sel="false" data-role="informs" tabindex="0" role="radio" aria-checked="false">
+          <span class="on"><span class="ox" aria-hidden="true"></span>Informs a human decision</span>
+          <p class="od">Produces information a person weighs. No ordering, no filtering, no recommendation per candidate.</p>
+        </div>
+        <div class="opt" data-sel="true" data-role="ranks" tabindex="0" role="radio" aria-checked="true">
+          <span class="on"><span class="ox" aria-hidden="true"></span>Ranks or filters candidates</span>
+          <p class="od">Orders or shortlists people, or flags them for decline. A person still signs off every outcome.</p>
+        </div>
+        <div class="opt" data-sel="false" data-role="decides" tabindex="0" role="radio" aria-checked="false">
+          <span class="on"><span class="ox" aria-hidden="true"></span>Decides autonomously</span>
+          <p class="od">Rejects, selects or scores with no human review in the path before the candidate is affected.</p>
+        </div>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:20px;color:var(--ink2)" id="role-why"><b>Why this matters.</b> TalentSieve produces a ranked shortlist and a &#8220;recommend interview&#8221; / &#8220;recommend decline&#8221; flag per candidate. It does not itself reject anyone &#8212; a recruiter reviews every decline flag before a candidate is removed from the process. Changing this field changes the triage questions you are asked, the controls you must evidence, and whether a GDPR Art. 22 question is even in play.</p>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <div class="ch"><h2>Register entry</h2><p>Structured fields. This is what the evidence pack prints as section 2.</p><span class="grow"></span><button class="btn sm">Edit</button></div>
+        <div class="cb">
+          <dl class="kv">
+            <dt>System name</dt><dd>TalentSieve <span class="t2">v3.2 · recruitment-screening module</span></dd>
+            <dt>Vendor</dt><dd>Orvenda AI B.V. <span class="t2">Amsterdam, NL</span></dd>
+            <dt>Vendor role</dt><dd><span class="pill neu">Provider</span>
+              <details class="cite"><summary>Art. 3(3)</summary><div class="body">The vendor develops the system and places it on the market under its own name, which is what makes it the provider.<span class="src">Art. 3(3), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09</span></div></details>
+            </dd>
+            <dt>Our role</dt><dd><span class="pill brand">Deployer</span>
+              <details class="cite"><summary>What a deployer is, and is not</summary><div class="body">A deployer uses an AI system under its own authority in the course of its activity. Deployer duties are not provider duties: you are not asked to carry out a conformity assessment or issue a declaration of conformity &#8212; you are asked to use the system as instructed, keep a named human in the loop, check the input data you control, monitor it, inform the people affected, and keep logs.<span class="src">Art. 3(4) and Art. 26, Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09</span></div></details>
+            </dd>
+            <dt>Purpose, in plain language</dt><dd>Parses incoming CVs and application-form answers for warehouse-operative and logistics-supervisor vacancies, scores them against role criteria set by Stavenhorst recruiters, and produces a ranked shortlist for human review. It does not process video, audio or biometric signals.</dd>
+            <dt>Lifecycle state</dt><dd><span class="pill ok">Production</span> <span class="t2">go-live 2026-06-15</span></dd>
+            <dt>Entities in scope</dt><dd>Stavenhorst Logistik GmbH &#8212; Hamburg, DE (HQ)<span class="t2">Stavenhorst Logistiek B.V. &#8212; Rotterdam, NL (branch)</span></dd>
+            <dt>Affected worker groups</dt><dd>External candidates for warehouse-operative and logistics-supervisor roles <span class="t2">Not applied to internal promotion or performance management. No current employee is scored by this system.</span></dd>
+            <dt>Estimated volume</dt><dd><span class="num">&#8776;2,100</span> applications screened per year <span class="t2">across both entities</span></dd>
+            <dt>Named business owner</dt><dd>Sabine Hoffmann <span class="t2">Group Head of HR · named human overseer</span></dd>
+            <dt>Named technical owner</dt><dd>Priya Nair <span class="t2">Group IT Systems Owner</span></dd>
+            <dt>Data categories</dt><dd>CV/r&#233;sum&#233; content, cover-letter text, application-form answers (education, work history, right-to-work status, role-specific screening questions), contact details</dd>
+            <dt>Retention period</dt><dd>6 months after the role is filled or withdrawn, then deleted <span class="t2">automated purge job PJ-114 · control C12</span></dd>
+            <dt>Evidence links</dt><dd>Vendor Instructions for Use v3.2 <span class="t2">received 2026-06-02</span>
+              <div style="margin-top:6px">DPIA-2026-014 <span class="t2">completed 2026-08-20</span></div>
+              <div style="margin-top:6px">Recruiter training log RT-2026-06</div>
+            </dd>
+            <dt>Register ID</dt><dd><span style="font-family:var(--mono);font-size:12.5px">UC-001</span> <span class="t2">created 2026-05-02 by Priya Nair</span></dd>
+            <dt>Next review</dt><dd><span class="num">2027-03-28</span> <span class="t2">6-month cycle</span></dd>
+          </dl>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="ch"><h2>Status</h2></div>
+          <div class="cb">
+            <div class="alert bad" style="margin-bottom:14px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use &#8212; indicative.</b> Confirmed by Almuth Cordes, employment counsel, on 2026-09-26. One question remains referred to counsel.</span></div>
+            <dl class="kv" style="grid-template-columns:140px 1fr">
+              <dt>Triage</dt><dd>Confirmed <span class="t2">A. Cordes · 2026-09-26</span></dd>
+              <dt>Evidence</dt><dd><span class="bar part" role="img" aria-label="9 of 12 controls evidenced"><i style="width:75%"></i></span><span class="t2 num">9 evidenced · 2 partial · 1 missing</span></dd>
+              <dt>Open gaps</dt><dd><span class="num">3</span> <span class="t2">1 high · 1 medium-high · 1 medium</span></dd>
+              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.09</span></dd>
+            </dl>
+            <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn sm" data-go="gaps">See gaps</button>
+              <button class="btn sm" data-go="export">Generate evidence pack</button>
+            </div>
+          </div>
+        </div>
+        <div class="notinc">
+          <b>Deliberately not in this record</b>
+          <ul>
+            <li>No candidate names, scores or individual results.</li>
+            <li>No employee-level data of any kind.</li>
+            <li>No connection to the applicant-tracking system &#8212; the register is maintained by hand, because that is what a two-person team can actually keep true.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. TRIAGE ============ -->
+  <section class="screen" id="s-triage" aria-labelledby="h-triage">
+    <div class="head">
+      <div>
+        <p class="crumb"><a href="#register">Register</a> &#8250; <a href="#usecase">UC-001</a> &#8250; Employment triage</p>
+        <h1 id="h-triage">Employment triage</h1>
+        <p class="sub">Six plain questions. Each answer shows the provision it relies on, and nothing is treated as settled until a named person confirms it.</p>
+      </div>
+      <span class="grow"></span>
+      <span class="chip rule">Rule pack EU-EMPL-2026.09</span>
+    </div>
+
+    <div class="alert info" style="margin-bottom:20px"><span class="ai" aria-hidden="true">i</span><span><b>Indicative, not legal advice.</b> This triage tells you what the provisions appear to require for the facts you entered. It is not a legal opinion, not a conformity assessment, and it does not sign anything off. Where a point is genuinely unsettled, it is recorded as unsettled rather than answered &#8212; see question 5.</span></div>
+
+    <div class="tri">
+      <div class="rail">
+        <ol id="rail"></ol>
+      </div>
+      <div class="card">
+        <div class="cb" id="stepbox"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. EVIDENCE CHECKLIST ============ -->
+  <section class="screen" id="s-evidence" aria-labelledby="h-evidence">
+    <div class="head">
+      <div>
+        <p class="crumb"><a href="#register">Register</a> &#8250; <a href="#usecase">UC-001</a> &#8250; Evidence</p>
+        <h1 id="h-evidence">Evidence checklist</h1>
+        <p class="sub">Twelve controls for this use case. Each row is a document that exists or does not &#8212; status is a fact about your filing cabinet, not an opinion.</p>
+      </div>
+      <span class="grow"></span>
+      <button class="btn" data-go="gaps">See gaps</button>
+      <button class="btn pri" data-go="export">Generate evidence pack</button>
+    </div>
+
+    <div class="tiles" style="grid-template-columns:repeat(3,1fr)">
+      <div class="tile"><p class="k">Evidenced</p><p class="v num" style="color:var(--ok)">9</p><p class="m">document on file and verified</p></div>
+      <div class="tile"><p class="k">Partial</p><p class="v num" style="color:var(--warn)">2</p><p class="m">something on file, not enough</p></div>
+      <div class="tile"><p class="k">Missing</p><p class="v num" style="color:var(--bad)">1</p><p class="m">nothing on file</p></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h2>Controls</h2><p>An all-green checklist on a system three months live would itself be a red flag.</p></div>
+      <table>
+        <caption class="vh">Control checklist for UC-001 with status, owner, evidence document, last verified date and next review date.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Control</th>
+            <th scope="col">Status</th>
+            <th scope="col">Evidence document</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Last verified</th>
+            <th scope="col">Next review</th>
+          </tr>
+        </thead>
+        <tbody id="tb-ev"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 5. GAP DASHBOARD ============ -->
+  <section class="screen" id="s-gaps" aria-labelledby="h-gaps">
+    <div class="head">
+      <div>
+        <p class="crumb">Stavenhorst Logistik GmbH · all use cases</p>
+        <h1 id="h-gaps">Gaps across all use cases</h1>
+        <p class="sub">Sorted by severity, then by date. Every gap has a named owner and a target date &#8212; this page is written to be forwarded to a DPO or a works council without editing.</p>
+      </div>
+      <span class="grow"></span>
+      <button class="btn">Forward to DPO</button>
+      <button class="btn pri" data-go="export">Generate evidence pack</button>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><p class="k">Open gaps</p><p class="v num">6</p><p class="m">across 4 of 5 use cases</p></div>
+      <div class="tile"><p class="k">High &amp; med-high</p><p class="v num" style="color:var(--bad)">3</p><p class="m">2 high · 1 medium-high</p></div>
+      <div class="tile"><p class="k">Due in 30 days</p><p class="v num">2</p><p class="m">both with a named owner</p></div>
+      <div class="tile"><p class="k">Oldest open gap</p><p class="v num">C10</p><p class="m">works-council record, DE entity</p></div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h2>Open gaps</h2><p>Six open. Three belong to the CV-screening use case.</p></div>
+      <table>
+        <caption class="vh">Open gaps across all AI use cases, sorted by severity then target date, each with a named owner and target date.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Gap</th>
+            <th scope="col">Use case</th>
+            <th scope="col">Severity</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Target date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="tb-gaps"></tbody>
+      </table>
+    </div>
+    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Severities follow the rule pack, not a house scale. &#8220;Why it matters&#8221; is cited on every row &#8212; open a row to read it.</p>
+  </section>
+
+  <!-- ============ 6. EXPORT ============ -->
+  <section class="screen" id="s-export" aria-labelledby="h-export">
+    <div class="head">
+      <div>
+        <p class="crumb"><a href="#register">Register</a> &#8250; Export</p>
+        <h1 id="h-export">Generate evidence pack</h1>
+        <p class="sub">One PDF you can hand to a DPO, a works council, a customer&#8217;s procurement team or an authority. Gaps are flagged in it, not hidden from it.</p>
+      </div>
+    </div>
+
+    <div class="xgrid">
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="ch"><h2>Scope</h2></div>
+          <div class="cb">
+            <div class="cl">
+              <label><input type="radio" name="scope" checked><span><b>UC-001 &#8212; AI-assisted CV screening</b><span class="t2">Both entities · 12 controls · 3 open gaps</span></span></label>
+              <label><input type="radio" name="scope"><span>All 5 use cases<span class="t2">Longer pack (24 pages). Not recommended for a first conversation.</span></span></label>
+              <label><input type="radio" name="scope"><span>Stavenhorst Logistik GmbH (DE entity) only<span class="t2">4 use cases</span></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch"><h2>What goes in the pack</h2><p>Seven sections. The cover section cannot be switched off.</p></div>
+          <div class="cb">
+            <div class="cl">
+              <label><input type="checkbox" checked disabled><span>1 · Cover and scope statement<span class="t2">Always included. Carries the boundary statement: operational evidence, not legal advice, not a conformity assessment, no legal sign-off.</span></span></label>
+              <label><input type="checkbox" checked><span>2 · Register entry<span class="t2">Structured fields including the decision role and both named owners.</span></span></label>
+              <label><input type="checkbox" checked><span>3 · Employment triage result<span class="t2">The six questions, the provisions relied on, who confirmed each one, and the question still with counsel.</span></span></label>
+              <label><input type="checkbox" checked><span>4 · Control checklist with evidence status<span class="t2">12 rows · 9 evidenced, 2 partial, 1 missing.</span></span></label>
+              <label><input type="checkbox" checked><span>5 · Gap list with owners and dates<span class="t2">3 gaps for this use case, sorted by severity.</span></span></label>
+              <label><input type="checkbox" checked><span>6 · Activity and decision history<span class="t2">Append-only record of who decided what, and when.</span></span></label>
+              <label><input type="checkbox" checked><span>7 · Sources and rule-pack version<span class="t2">Every provision cited, with the date each source was last checked.</span></span></label>
+            </div>
+
+            <div class="alert warn" style="margin-top:16px"><span class="ai" aria-hidden="true">&#9650;</span><span><b>3 open gaps will be printed in this pack.</b> One high, one medium-high, one medium &#8212; each with its named owner and target date. There is no setting that removes them: a pack that hides its own gaps is worth nothing to the person you hand it to.</span></div>
+
+            <div class="navrow" style="border-top:0;padding-top:4px">
+              <button class="btn pri" id="gen">Generate pack</button>
+              <span class="t2" style="color:var(--muted);font-size:12.5px">as Sabine Hoffmann, Group Head of HR · 2026-10-02 14:26 CET</span>
+            </div>
+            <div class="prog" id="prog" hidden><i></i></div>
+            <p id="genmsg" style="margin:8px 0 0;font-size:12.5px;color:var(--muted)" aria-live="polite">Nothing leaves your workspace. The pack is generated from the register as it stands right now.</p>
+            <div id="genfile" hidden style="margin-top:14px">
+              <div class="file">
+                <span class="ic" aria-hidden="true">PDF</span>
+                <span><b>Stavenhorst-Logistik_CV-Screening_Evidence-Pack_2026-10-02.pdf</b><small>7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09 · generated 2026-10-02 14:26 CET by Sabine Hoffmann</small></span>
+              </div>
+              <p style="margin:10px 0 0;font-size:12.5px;color:var(--muted)">Recorded in the <a href="#activity">activity history</a>. If the register changes afterwards, this pack does not &#8212; regenerate it and both versions stay on the record.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="ch"><h2>Pack header</h2></div>
+          <div class="cb">
+            <dl class="kv" style="grid-template-columns:132px 1fr">
+              <dt>Organisation</dt><dd>Stavenhorst Logistik GmbH<span class="t2">640 employees · 430 DE / 210 NL</span></dd>
+              <dt>Use case</dt><dd>AI-assisted CV screening<span class="t2">UC-001 · TalentSieve v3.2</span></dd>
+              <dt>Generated</dt><dd><span class="num">2026-10-02 14:26 CET</span></dd>
+              <dt>Generated by</dt><dd>Sabine Hoffmann<span class="t2">Group Head of HR</span></dd>
+              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.09</span><span class="t2">sources last checked 2026-09-26</span></dd>
+              <dt>Next review</dt><dd><span class="num">2027-03-28</span></dd>
+            </dl>
+          </div>
+        </div>
+        <div class="notinc">
+          <b>Not in the pack, by design</b>
+          <ul>
+            <li>No candidate or employee names, scores or individual outcomes.</li>
+            <li>No statement that you are &#8220;compliant&#8221; &#8212; the pack evidences activity, it does not certify an outcome.</li>
+            <li>No legal sign-off. Where a point is unsettled, the pack says so and names the person who referred it to counsel.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. ACTIVITY & REVIEWS ============ -->
+  <section class="screen" id="s-activity" aria-labelledby="h-activity">
+    <div class="head">
+      <div>
+        <p class="crumb">Stavenhorst Logistik GmbH · UC-001</p>
+        <h1 id="h-activity">Activity and decision history</h1>
+        <p class="sub">Append-only. Who decided what, when, and on which rule-pack version. This is the chain a spreadsheet cannot produce after the fact.</p>
+      </div>
+      <span class="grow"></span>
+      <button class="btn" data-go="export">Generate evidence pack</button>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div class="ch"><h2>Review schedule</h2><p>Reminders are per use case, with the owner who will receive them.</p></div>
+      <table>
+        <caption class="vh">Review schedule per use case with owner, cadence and next review date.</caption>
+        <thead><tr><th scope="col">Use case</th><th scope="col">Owner</th><th scope="col">Cadence</th><th scope="col">Next review</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="t1">UC-003 Structured interview scoring</span><span class="t2">pilot, NL · triage awaiting confirmation</span></td><td>Tomasz Werner</td><td>Quarterly</td><td><span class="num">2026-10-20</span></td><td><span class="pill bad">Due in 18 days</span></td></tr>
+          <tr><td><span class="t1">UC-002 Warehouse shift optimisation</span><span class="t2">never triaged</span></td><td>Frank Oelkers</td><td>Semi-annual</td><td><span class="num">2026-11-03</span></td><td><span class="pill warn">In 4 weeks</span></td></tr>
+          <tr><td><span class="t1">UC-004 Performance review analytics</span></td><td>Liesbeth Maas</td><td>Annual</td><td><span class="num">2027-01-12</span></td><td><span class="pill neu">Scheduled</span></td></tr>
+          <tr><td><span class="t1">UC-005 Training recommendations</span></td><td>Priya Nair</td><td>Annual</td><td><span class="num">2027-02-28</span></td><td><span class="pill neu">Scheduled</span></td></tr>
+          <tr><td><span class="t1">UC-001 AI-assisted CV screening</span><span class="t2">both entities</span></td><td>Sabine Hoffmann</td><td>Semi-annual</td><td><span class="num">2027-03-28</span></td><td><span class="pill neu">Scheduled</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="ch"><h2>UC-001 history</h2><p>Entries cannot be edited or deleted. A correction is a new entry.</p></div>
+      <div class="cb">
+        <ul class="tl" id="tl"></ul>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<nav class="pathbar" aria-label="Prototype click-through path">
+  <div class="in">
+    <span class="lab">Click-through path</span>
+    <div class="dots" id="dots"></div>
+    <span class="grow"></span>
+    <span class="t2" style="font-size:12px;color:var(--muted)">Fictional data. No real company, person or vendor.</span>
+  </div>
+</nav>
+
+<script>
+/* ---------------- data: aligned to the sample evidence pack (GOM-12, Validation Sprint #3) ---------------- */
+
+var STEPS=[
+ {t:"Is this an AI system?",
+  q:"Is this an AI system under the EU AI Act?",
+  plain:"Plain question: does the system work out its own answer from the data you give it, rather than just applying rules a person wrote down?",
+  ans:["Yes — it infers a ranking from CV and application-form text","No — it applies fixed rules we wrote ourselves","We do not know what it does internally"],
+  sel:0,
+  tone:"info",
+  ind:"Indicative: yes, this is an AI system within scope.",
+  cite:"TalentSieve infers, from CV and application-answer text, a ranking that influences a hiring recommendation. That matches the statutory definition of a machine-based system that infers, from the input it receives, how to generate outputs such as predictions, content, recommendations or decisions.",
+  src:"Art. 3(1), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09",
+  by:"Confirmed by Priya Nair, Group IT Systems Owner · 2026-09-24"},
+
+ {t:"Is it used to recruit or select?",
+  q:"Are you using it to recruit or select people?",
+  plain:"Plain question: does it help decide who gets shortlisted, interviewed or declined?",
+  ans:["Yes — to analyse and filter job applications and evaluate candidates","Yes, but only for internal promotion decisions","No — it is not used in hiring at all"],
+  sel:0,
+  tone:"bad",
+  ind:"Indicative: yes — high-risk employment use.",
+  cite:"Stavenhorst is the employer, and TalentSieve is used to analyse and filter job applications and evaluate candidates for warehouse-operative and logistics-supervisor roles. Annex III point 4(a) covers AI systems intended to be used for the recruitment or selection of natural persons, in particular to analyse and filter job applications and to evaluate candidates.",
+  src:"Art. 6(2) and Annex III, point 4(a), Regulation (EU) 2024/1689",
+  by:"Confirmed by Almuth Cordes, employment counsel (Cordes &amp; Partner Rechtsanwälte, Hamburg — fictional firm) · 2026-09-26"},
+
+ {t:"Does it read emotion?",
+  q:"Does it read emotion, mood or personality from voice, face or video?",
+  plain:"We ask this even when the answer is no, because the answer changes what you are allowed to buy — not just what you have to document.",
+  ans:["No — the deployed module reads text only. The vendor’s video-sentiment add-on was evaluated and not purchased.","Yes — it scores video or voice signals","We are not sure which signals it uses"],
+  sel:0,
+  tone:"ok",
+  ind:"Indicative: the prohibition is not engaged by the configuration you have deployed.",
+  cite:"Art. 5(1)(f) prohibits inferring emotions of a natural person in the workplace, subject to a narrow medical or safety exception. The CV-screening module in scope processes text only (CV content, form answers) and does not infer emotion. Orvenda AI also sells an optional video-interview sentiment add-on; it was evaluated and deliberately not purchased, and that decision is what keeps this answer where it is.",
+  src:"Art. 5(1)(f), Regulation (EU) 2024/1689",
+  by:"Confirmed by Almuth Cordes · 2026-09-26 · Open item recorded: if the sentiment add-on is ever evaluated for interview stages, re-run this question before purchase, not after."},
+
+ {t:"Must you tell candidates?",
+  q:"Do you have to tell candidates that an AI system is involved?",
+  plain:"Plain question: does a person applying for one of these jobs find out before they apply?",
+  ans:["Yes — careers-page notice and application-form notice are both live","No notice has been published yet","It is mentioned in the privacy policy only"],
+  sel:0,
+  tone:"info",
+  ind:"Indicative: two separate duties apply, and they stay tracked separately.",
+  cite:"Two duties, not one: (i) the AI Act deployer duty to inform natural persons that they are subject to the use of a high-risk AI system where it forms the basis of a decision concerning them; (ii) the GDPR duty to provide fair-processing information at the point the data is collected. Both are addressed here via the careers-page notice v3 and the application-form notice — control C7.",
+  src:"Art. 26(11), Regulation (EU) 2024/1689 · Art. 13, Regulation (EU) 2016/679",
+  by:"Confirmed by Lukas Bergmann, external DPO (Kettering Datenschutz Partner GmbH — fictional firm) · 2026-09-25"},
+
+ {t:"Does GDPR add anything?",
+  q:"Does data-protection law add anything on top?",
+  plain:"Plain question: is there a real human step before a candidate is removed from the process?",
+  ans:["A recruiter reviews every decline flag before anyone is removed","The system declines candidates with no human step","We are not sure where the human step sits"],
+  sel:0,
+  tone:"warn",
+  ind:"Indicative: the DPIA trigger applies and was met. One question is unsettled and is not answered here.",
+  cite:"DPIA trigger: screening CVs at scale with an automated scoring model to inform hiring decisions is a systematic evaluation of personal aspects based on automated processing on which decisions affecting the candidate are based — within Art. 35(3)(a). DPIA-2026-014 was completed on 2026-08-20. Art. 22: whether the recruiter-review step is “meaningful” enough to place the output outside Art. 22(1)’s “based solely on automated processing” trigger, given the practical influence a ranked shortlist has on recruiter behaviour, is unsettled — it requires legal confirmation and is not resolved by this tool.",
+  src:"Art. 22(1)–(3) and Art. 35(1), (3)(a), Regulation (EU) 2016/679",
+  by:"DPIA trigger confirmed by Lukas Bergmann · 2026-09-25 · Art. 22 characterisation referred to counsel and recorded as unsettled, not answered."},
+
+ {t:"Is a FRIA required?",
+  q:"Do you have to do a fundamental rights impact assessment (FRIA)?",
+  plain:"Plain question: are you a public body, do you provide a public service, or do you run credit-scoring or life/health-insurance pricing?",
+  ans:["None of those — we are a private logistics operator","We are a public body or provide public services","We deploy credit-scoring or insurance-pricing systems"],
+  sel:0,
+  tone:"ok",
+  ind:"Indicative: Article 27 does NOT apply to you for this use case.",
+  cite:"Article 27 FRIA duties attach only to deployers that are bodies governed by public law, private entities providing public services, or deployers of the Annex III point 5(b)/(c) creditworthiness and life/health-insurance systems. Stavenhorst Logistik GmbH and Stavenhorst Logistiek B.V. are private logistics operators, and TalentSieve is an Annex III point 4(a) employment system. This is stated explicitly rather than presenting a FRIA as a universal duty.",
+  src:"Art. 27(1), Regulation (EU) 2024/1689",
+  by:"Confirmed by Almuth Cordes · 2026-09-26 · Re-run if the group ever deploys this scoring for a public-sector tender workforce, or the vendor adds a credit- or insurance-adjacent module."}
+];
+
+var CONTROLS=[
+ {id:"C1",c:"Human oversight design and named overseer",r:"A named person reviews the AI output before it affects a candidate.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Recruiter Review SOP v2 · RT-2026-06",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10"},
+ {id:"C2",c:"Overseer competence and authority to override",r:"Overseers are trained and are actually allowed to override or reject the recommendation.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"RT-2026-06 training log · override rate tracked: 4.1% of flags overridden Jun–Aug 2026",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10"},
+ {id:"C3",c:"Vendor documentation and instructions for use received",r:"The provider’s instructions for use are on file.",src:"Art. 26(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Orvenda AI Instructions for Use v3.2",o:"Priya Nair",lv:"2026-06-02",nr:"2027-06-02"},
+ {id:"C4",c:"Input-data relevance and representativeness check",r:"The data used matches the intended purpose and the candidate population actually applying.",src:"Art. 26(4), Regulation (EU) 2024/1689",st:"warn",stl:"Partial",doc:"Vendor’s 2025 general fairness audit on file; no group-specific validation yet against the DE/NL applicant mix",o:"Priya Nair",lv:"2026-06-15 (vendor audit only)",nr:"2026-11-15 target",gap:true},
+ {id:"C5",c:"Monitoring of operation and outcomes",r:"Operation and outcome patterns are reviewed on an agreed cadence.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Quarterly ranking-distribution review · Q2 2026 report",o:"Priya Nair",lv:"2026-08-31",nr:"2026-11-30"},
+ {id:"C6",c:"Logging and log retention",r:"Automatically generated logs are kept for at least the statutory minimum of six months.",src:"Art. 26(6), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Log retention config: 12 months, exceeds the minimum",o:"Priya Nair",lv:"2026-09-01",nr:"2027-03-01"},
+ {id:"C7",c:"Candidate information / transparency notice",r:"Candidates are told an AI system is used before they apply.",src:"Art. 26(11), Reg. (EU) 2024/1689 · Art. 13, Reg. (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"Careers-page notice v3 · application-form notice",o:"Sabine Hoffmann",lv:"2026-06-10",nr:"2027-06-10"},
+ {id:"C8",c:"Route for a candidate to contest or request review",r:"A candidate can ask for a human explanation or review of an AI-influenced outcome.",src:"Art. 86(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"recruiting-review@stavenhorst-logistik.example intake process · SLA 10 business days",o:"Sabine Hoffmann",lv:"2026-07-01",nr:"2027-01-01"},
+ {id:"C9",c:"Incident escalation path",r:"There is a defined path for AI-specific hiring incidents — suspected bias, wrong output — with a trigger, an owner and an SLA.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"bad",stl:"Missing",doc:"General IT incident process exists, but it has no AI-specific trigger, owner or SLA",o:"Sabine Hoffmann",lv:"—",nr:"2026-10-31 target",gap:true},
+ {id:"C10",c:"Works-council information / consultation record (DE entity)",r:"The works council was informed and consulted before deployment, under national co-determination rights.",src:"Betriebsverfassungsgesetz (DE) §87(1) No. 6 — national law, tracked separately from the EU provisions",st:"warn",stl:"Partial",doc:"Betriebsrat informed 2026-05-20 (minutes on file); no signed Betriebsvereinbarung yet; NL Ondernemingsraad consent process under WOR Art. 27(1) not yet started",o:"Jonas Reiter (Betriebsrat chair) / Sabine Hoffmann",lv:"2026-05-20 (DE, informal only)",nr:"2026-12-01 target",gap:true},
+ {id:"C11",c:"DPIA reference",r:"A data-protection impact assessment has been carried out and is on file.",src:"Art. 35(1), (3)(a), Regulation (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"DPIA-2026-014",o:"Lukas Bergmann (external DPO)",lv:"2026-08-20",nr:"2027-08-20"},
+ {id:"C12",c:"Retention and deletion",r:"Candidate data is deleted on a defined schedule.",src:"Art. 5(1)(e), Reg. (EU) 2016/679 · retention period also informed by German AGG claim-limitation practice (national law)",st:"ok",stl:"Evidenced",doc:"Retention rule: 6 months after role close · automated purge job PJ-114",o:"Priya Nair",lv:"2026-09-05",nr:"2027-03-05"}
+];
+
+var GAPS=[
+ {g:"No AI-specific incident escalation path",ctl:"C9",uc:"UC-001 CV screening",ucs:"both entities",sev:"high",sevl:"High",o:"Sabine Hoffmann",or:"Group Head of HR",due:"2026-10-31",st:"Open",
+  why:"Without a defined trigger and SLA, a suspected-bias or wrong-output event can sit in the general IT queue past the point where it is still affecting live candidates. That undermines the monitoring duty in practice, not just on paper.",src:"Art. 26(5), Regulation (EU) 2024/1689"},
+ {g:"Interview-scoring pilot has no named human overseer",ctl:"—",uc:"UC-003 Interview scoring",ucs:"NL, pilot",sev:"high",sevl:"High",o:"Tomasz Werner",or:"Recruiting Lead, NL",due:"2026-10-20",st:"Open",
+  why:"The pilot has been running since August with no natural person assigned to oversee it. A pilot is still putting the system into service, and the oversight duty attaches at that point.",src:"Art. 26(2), Regulation (EU) 2024/1689"},
+ {g:"DE works agreement not signed; NL works-council consent not yet sought",ctl:"C10",uc:"UC-001 CV screening",ucs:"DE + NL",sev:"mh",sevl:"Medium-high",o:"Jonas Reiter / Sabine Hoffmann",or:"Betriebsrat chair / Group Head of HR",due:"2026-12-01",st:"Open",
+  why:"Deploying a system that evaluates candidate-facing outcomes without completing co-determination is a national-law exposure independent of AI Act status, and it undermines the credibility of the “workers’ representatives were informed” evidence.",src:"BetrVG §87(1) No. 6 (DE) · WOR Art. 27(1) (NL) · Art. 26(7), Reg. (EU) 2024/1689"},
+ {g:"No group-specific input-data representativeness validation",ctl:"C4",uc:"UC-001 CV screening",ucs:"both entities",sev:"medium",sevl:"Medium",o:"Priya Nair",or:"Group IT Systems Owner",due:"2026-11-15",st:"Open",
+  why:"Relying only on the vendor’s general 2025 audit does not show the model performs consistently across your actual DE/NL applicant mix, where language and education-system variation differ. The duty attaches to the deployer, not only the provider.",src:"Art. 26(4), Regulation (EU) 2024/1689"},
+ {g:"Vendor instructions for use not on file",ctl:"—",uc:"UC-002 Shift optimisation",ucs:"DE entity",sev:"low",sevl:"Low",o:"Frank Oelkers",or:"Warehouse Operations Manager",due:"2026-11-03",st:"Open",
+  why:"This use case has not been triaged yet, so whether the full deployer duty set applies is still open. Either way the vendor’s instructions belong on file before the triage can be completed.",src:"Art. 26(1), Regulation (EU) 2024/1689"},
+ {g:"No DPIA reference for performance analytics",ctl:"—",uc:"UC-004 Performance analytics",ucs:"both entities",sev:"low",sevl:"Low",o:"Lukas Bergmann",or:"External Data Protection Officer",due:"2026-11-28",st:"Open",
+  why:"Systematic evaluation of employee performance is likely to require a DPIA. The assessment may well exist in the DPO’s own files; the register holds no reference to it, and that missing reference is itself the gap.",src:"Art. 35(3)(a), Regulation (EU) 2016/679"}
+];
+
+var ACTS=[
+ {w:"2026-09-28",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09"},
+ {w:"2026-09-28",k:"rule",t:"<b>Sabine Hoffmann</b> applied rule pack <b>EU-EMPL-2026.09</b> and reviewed the gap list",s:"Three open items (C4, C9, C10) accepted with target dates"},
+ {w:"2026-09-26",k:"confirm",t:"<b>Almuth Cordes</b> (employment counsel) confirmed triage questions 2, 3 and 6",s:"High-risk employment use — indicative · Art. 27 FRIA confirmed as not applicable to this deployer"},
+ {w:"2026-09-25",k:"confirm",t:"<b>Lukas Bergmann</b> (external DPO) confirmed question 4 (transparency) and the question 5 DPIA trigger",s:"Art. 22 sole-automation characterisation referred to counsel and recorded as unsettled"},
+ {w:"2026-09-24",k:"confirm",t:"<b>Priya Nair</b> confirmed question 1 — TalentSieve is an AI system within scope",s:"Art. 3(1) · rule pack EU-EMPL-2026.09"},
+ {w:"2026-08-31",k:"",t:"<b>Priya Nair</b> reviewed the Q2 2026 monitoring report",s:"No anomalies requiring escalation · control C5 stayed evidenced"},
+ {w:"2026-08-20",k:"",t:"<b>Lukas Bergmann</b> filed <i>DPIA-2026-014</i> against the GDPR Art. 35(3)(a) trigger",s:"Control C11 moved to evidenced"},
+ {w:"2026-07-01",k:"",t:"<b>Sabine Hoffmann</b> opened the candidate contest and review route",s:"recruiting-review@ intake process · SLA 10 business days · Art. 86(1)"},
+ {w:"2026-06-15",k:"",t:"<b>Priya Nair</b> moved TalentSieve v3.2 to production",s:"Register lifecycle state updated from pilot to production"},
+ {w:"2026-06-10",k:"",t:"<b>Sabine Hoffmann</b> published the candidate transparency notice",s:"Careers page and application form · control C7"},
+ {w:"2026-06-02",k:"",t:"<b>Priya Nair</b> filed <i>Orvenda AI Instructions for Use v3.2</i>",s:"Control C3 moved to evidenced"},
+ {w:"2026-05-20",k:"",t:"<b>Sabine Hoffmann</b> informed the DE Betriebsrat of the planned deployment",s:"BetrVG §87(1) No. 6 process opened · control C10 remains partial until the works agreement is signed"},
+ {w:"2026-05-02",k:"",t:"<b>Priya Nair</b> created register entry <b>UC-001</b> and set the decision role to <i>ranks or filters candidates</i>",s:"First entry in the register"}
+];
+
+var PATH=[["register","1 Register"],["usecase","2 Use case"],["triage","3 Triage"],["evidence","4 Evidence"],["gaps","5 Gaps"],["export","6 Export"],["activity","7 History"]];
+
+/* ---------------- render ---------------- */
+function esc(s){return String(s).replace(/&(?!(amp|lt|gt|#\d+|#x[0-9a-fA-F]+);)/g,"&amp;").replace(/</g,"&lt;")}
+
+/* evidence table */
+(function(){
+  var h="";
+  for(var i=0;i<CONTROLS.length;i++){var c=CONTROLS[i];
+    h+='<tr>'+
+      '<td><span class="t1"><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px">'+c.id+'</span>'+esc(c.c)+'</span>'+
+        '<details class="cite"><summary>What this asks for</summary><div class="body">'+esc(c.r)+'<span class="src">'+esc(c.src)+'</span></div></details></td>'+
+      '<td><span class="pill '+c.st+'">'+c.stl+'</span>'+(c.gap?'<span class="t2">in the gap list</span>':'')+'</td>'+
+      '<td style="max-width:30ch"><span class="t2" style="margin-top:0">'+esc(c.doc)+'</span></td>'+
+      '<td><span class="t2" style="margin-top:0">'+esc(c.o)+'</span></td>'+
+      '<td><span class="num">'+esc(c.lv)+'</span></td>'+
+      '<td><span class="num">'+esc(c.nr)+'</span></td>'+
+    '</tr>';
+  }
+  document.getElementById("tb-ev").innerHTML=h;
+})();
+
+/* gaps table */
+(function(){
+  var h="";
+  for(var i=0;i<GAPS.length;i++){var g=GAPS[i];
+    h+='<tr>'+
+      '<td style="max-width:46ch"><span class="t1">'+esc(g.g)+'</span>'+
+        '<details class="cite"><summary>Why it matters</summary><div class="body">'+esc(g.why)+'<span class="src">'+esc(g.src)+'</span></div></details></td>'+
+      '<td><span class="t2" style="margin-top:0">'+esc(g.uc)+'<br>'+esc(g.ucs)+(g.ctl!=="—"?' · '+g.ctl:'')+'</span></td>'+
+      '<td><span class="pill '+(g.sev==="high"?"bad":g.sev==="mh"?"mh":g.sev==="medium"?"warn":"neu")+'">'+g.sevl+'</span></td>'+
+      '<td><span class="t1">'+esc(g.o)+'</span><span class="t2">'+esc(g.or)+'</span></td>'+
+      '<td><span class="num">'+esc(g.due)+'</span></td>'+
+      '<td><span class="pill neu">'+esc(g.st)+'</span></td>'+
+    '</tr>';
+  }
+  document.getElementById("tb-gaps").innerHTML=h;
+})();
+
+/* activity timeline */
+function renderTL(){
+  var h="";
+  for(var i=0;i<ACTS.length;i++){var a=ACTS[i];
+    h+='<li data-kind="'+a.k+'"><span class="when">'+a.w+'</span><span class="axis" aria-hidden="true"><span class="dot"></span></span>'+
+       '<span class="what">'+a.t+'<span class="t2">'+a.s+'</span></span></li>';
+  }
+  document.getElementById("tl").innerHTML=h;
+}
+renderTL();
+
+/* ---------------- triage ---------------- */
+var cur=0, confirmed=false;
+
+function railHTML(){
+  var h="";
+  for(var i=0;i<STEPS.length;i++){
+    h+='<li><button type="button" data-step="'+i+'"'+(cur===i?' aria-current="step"':'')+'>'+
+       '<span class="sn'+(i<cur?' sd':'')+'"'+(i<cur?' data-done="true"':'')+'>'+(i<cur?"✓":(i+1))+'</span>'+
+       '<span class="st">'+STEPS[i].t+'</span></button></li>';
+  }
+  h+='<li><button type="button" data-step="'+STEPS.length+'"'+(cur===STEPS.length?' aria-current="step"':'')+'>'+
+     '<span class="sn'+(confirmed?' sd':'')+'"'+(confirmed?' data-done="true"':'')+'>'+(confirmed?"✓":"★")+'</span>'+
+     '<span class="st">Result and confirmation</span></button></li>';
+  return h;
+}
+
+function stepHTML(){
+  if(cur<STEPS.length){
+    var s=STEPS[cur], h='<div class="step">'+
+      '<p class="crumb">Question '+(cur+1)+' of '+STEPS.length+'</p>'+
+      '<h2>'+esc(s.q)+'</h2>'+
+      '<p class="plain">'+esc(s.plain)+'</p>'+
+      '<div class="ans" role="radiogroup" aria-label="Answer">';
+    for(var i=0;i<s.ans.length;i++){
+      h+='<div class="a" role="radio" tabindex="0" data-ans="'+i+'" data-sel="'+(s.sel===i)+'" aria-checked="'+(s.sel===i)+'">'+
+         '<span class="ox" aria-hidden="true"></span><span>'+esc(s.ans[i])+'</span></div>';
+    }
+    h+='</div>'+
+      '<div class="ind"><span aria-hidden="true">→</span><span><b>'+esc(s.ind)+'</b> This is an indicative result produced by rule pack EU-EMPL-2026.09. It is not legal advice and is not final until a named person confirms it.'+
+        '<details class="cite"><summary>Show the provision this relies on</summary><div class="body">'+esc(s.cite)+'<span class="src">'+esc(s.src)+'</span></div></details>'+
+        '<span class="t2" style="display:block;color:var(--muted);font-size:12px;margin-top:8px">'+s.by+'</span></span></div>'+
+      '<div class="navrow">'+
+        (cur>0?'<button class="btn" data-nav-step="'+(cur-1)+'">Back</button>':'')+
+        '<button class="btn pri" data-nav-step="'+(cur+1)+'">'+(cur===STEPS.length-1?"See the result":"Next question")+'</button>'+
+        '<span class="grow"></span><span style="font-size:12.5px;color:var(--muted)">Answers are saved as you go. Nothing is submitted anywhere.</span>'+
+      '</div></div>';
+    return h;
+  }
+
+  /* result step */
+  return '<div class="step">'+
+    '<p class="crumb">Result</p>'+
+    '<h2>Indicative result for UC-001</h2>'+
+    '<div class="alert bad" style="margin:0 0 16px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use — indicative.</b> A recruitment and selection system that analyses and filters job applications falls in the Annex III point 4(a) employment category. Indicative means exactly that: produced by rule pack EU-EMPL-2026.09 from the answers above, not a legal opinion, not a conformity assessment, and not binding on anyone.<span class="provs" style="margin-top:8px"><span class="p">Art. 6(2)</span><span class="p">Annex III 4(a)</span><span class="p">Art. 26</span><span class="p">Art. 86(1)</span><span class="p">GDPR Art. 22</span><span class="p">GDPR Art. 35</span></span></span></div>'+
+    '<div class="tracks">'+
+      '<div class="track"><h3>AI Act deployer duties</h3><ul><li>Use as instructed · Art. 26(1)</li><li>Named human oversight · Art. 26(2)</li><li>Input data you control · Art. 26(4)</li><li>Monitoring · Art. 26(5)</li><li>Logs, min. 6 months · Art. 26(6)</li><li>Inform workers’ representatives · Art. 26(7)</li><li>Inform candidates · Art. 26(11)</li></ul></div>'+
+      '<div class="track"><h3>GDPR — separate track</h3><ul><li>DPIA carried out · Art. 35(3)(a) — DPIA-2026-014</li><li>Candidate information · Art. 13</li><li>Retention · Art. 5(1)(e)</li><li><b>Art. 22 sole-automation: unsettled</b> — referred to counsel, not answered here</li></ul></div>'+
+      '<div class="track"><h3>Works-council duties — national law</h3><ul><li>DE: BetrVG §87(1) No. 6 — Betriebsrat informed 2026-05-20, works agreement not yet signed</li><li>NL: WOR Art. 27(1) — Ondernemingsraad consent not yet sought; the exact sub-point is unsettled</li></ul></div>'+
+      '<div class="track"><h3>Art. 27 FRIA</h3><ul><li><b>Not applicable to you</b> for this use case · Art. 27(1)</li><li>You are a private logistics operator, not a public body or public-service provider, and this is not a credit or insurance system</li><li>Re-run if either of those changes</li></ul></div>'+
+    '</div>'+
+    '<div class="alert warn" style="margin-top:16px"><span class="ai" aria-hidden="true">▲</span><span><b>One open question, recorded as unsettled.</b> Whether the recruiter-review step is &#8220;meaningful&#8221; enough to put the output outside GDPR Art. 22(1) is not resolved here. It is recorded as referred to counsel by Lukas Bergmann on 2026-09-25, and it prints in the evidence pack as an open question rather than as an answer.</span></div>'+
+    (confirmed
+      ? '<div class="stamp"><span class="ai" aria-hidden="true">✓</span><span><b>Confirmed by Sabine Hoffmann, Group Head of HR — 2026-10-02 14:20 CET.</b><br>Recorded against rule pack EU-EMPL-2026.09 with one open question referred to counsel. Written to the append-only <a href="#activity">activity history</a>; it can be superseded by a new confirmation but not erased.</span></div>'+
+        '<div class="navrow"><button class="btn" data-nav-step="0">Review the questions again</button><button class="btn pri" data-go="evidence">Go to the evidence checklist</button></div>'
+      : '<div class="confirm"><label><input type="checkbox" id="ack"><span>I have read the indicative result and the provisions it relies on. I am confirming this classification as the responsible named person for this use case, on the understanding that it is operational evidence and <b>not legal advice</b>, and that the open question above remains with counsel.</span></label>'+
+        '<div class="navrow" style="margin-top:14px"><button class="btn pri" id="doconf" disabled>Confirm as Sabine Hoffmann, Group Head of HR</button><span style="font-size:12.5px;color:var(--muted)">A confirmation always carries a name, a role and a timestamp. The tool never confirms on your behalf.</span></div></div>')+
+  '</div>';
+}
+
+function paintTriage(){
+  document.getElementById("rail").innerHTML=railHTML();
+  document.getElementById("stepbox").innerHTML=stepHTML();
+}
+paintTriage();
+
+document.addEventListener("click",function(e){
+  var t=e.target;
+
+  var stepBtn=t.closest&&t.closest("[data-step]");
+  if(stepBtn){cur=parseInt(stepBtn.getAttribute("data-step"),10);paintTriage();return;}
+
+  var navStep=t.closest&&t.closest("[data-nav-step]");
+  if(navStep){cur=parseInt(navStep.getAttribute("data-nav-step"),10);paintTriage();return;}
+
+  var a=t.closest&&t.closest("[data-ans]");
+  if(a&&cur<STEPS.length){STEPS[cur].sel=parseInt(a.getAttribute("data-ans"),10);paintTriage();return;}
+
+  if(t.id==="doconf"){
+    confirmed=true;
+    ACTS.unshift({w:"2026-10-02",k:"confirm",t:"<b>Sabine Hoffmann</b> (Group Head of HR) confirmed the employment triage for UC-001 as <b>high-risk employment use — indicative</b>",s:"Rule pack EU-EMPL-2026.09 · one open question referred to counsel"});
+    renderTL();paintTriage();return;
+  }
+
+  var opt=t.closest&&t.closest(".opt[data-role]");
+  if(opt){
+    var all=document.querySelectorAll(".opt[data-role]");
+    for(var i=0;i<all.length;i++){all[i].setAttribute("data-sel","false");all[i].setAttribute("aria-checked","false");}
+    opt.setAttribute("data-sel","true");opt.setAttribute("aria-checked","true");
+    var r=opt.getAttribute("data-role"),w=document.getElementById("role-why");
+    if(r==="ranks"){w.innerHTML='<b>Why this matters.</b> TalentSieve produces a ranked shortlist and a “recommend interview” / “recommend decline” flag per candidate. It does not itself reject anyone — a recruiter reviews every decline flag before a candidate is removed from the process. Changing this field changes the triage questions you are asked, the controls you must evidence, and whether a GDPR Art. 22 question is even in play.';}
+    else if(r==="informs"){w.innerHTML='<b>Why this matters.</b> On this setting the system would only surface information a person weighs, with no ordering or filtering of people. That is a materially different record: the Annex III employment analysis still has to be run, but the GDPR Art. 22 question usually falls away. <b>It would not match how TalentSieve is actually used here</b>, which is why the field is auditable and dated.';}
+    else{w.innerHTML='<b>Why this matters.</b> On this setting a candidate would be affected with no human review in the path. That makes the GDPR Art. 22(1) question central rather than arguable, and the human-oversight controls become the first thing an authority asks about. <b>It would not match how TalentSieve is actually used here</b> — and if it ever did, this record would have to say so on the day it changed.';}
+    return;
+  }
+
+  var rowOpen=t.closest&&t.closest("tr.rowlink");
+  if(rowOpen&&rowOpen.getAttribute("data-open")){location.hash="#"+rowOpen.getAttribute("data-open");return;}
+
+  var go=t.closest&&t.closest("[data-go]");
+  if(go){location.hash="#"+go.getAttribute("data-go");return;}
+
+  var f=t.closest&&t.closest("[data-regf]");
+  if(f){
+    var chips=document.querySelectorAll("[data-regf]");
+    for(var j=0;j<chips.length;j++)chips[j].setAttribute("aria-pressed",chips[j]===f?"true":"false");
+    var k=f.getAttribute("data-regf"),rows=document.querySelectorAll("#tb-reg tr");
+    for(var n=0;n<rows.length;n++){
+      var tags=rows[n].getAttribute("data-tags")||"";
+      rows[n].style.display=(k==="all"||tags.indexOf(k)>-1)?"":"none";
+    }
+    return;
+  }
+});
+
+document.addEventListener("change",function(e){
+  if(e.target.id==="ack"){document.getElementById("doconf").disabled=!e.target.checked;}
+});
+
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Enter"&&e.key!==" ")return;
+  var t=e.target;
+  if(t.classList&&(t.classList.contains("a")||t.classList.contains("opt")||t.classList.contains("rowlink"))){e.preventDefault();t.click();}
+});
+
+/* register search */
+document.getElementById("q-reg").addEventListener("input",function(){
+  var v=this.value.toLowerCase(),rows=document.querySelectorAll("#tb-reg tr");
+  for(var i=0;i<rows.length;i++){rows[i].style.display=rows[i].textContent.toLowerCase().indexOf(v)>-1?"":"none";}
+});
+
+/* ---------------- export ---------------- */
+var gen=document.getElementById("gen"),prog=document.getElementById("prog"),msg=document.getElementById("genmsg"),gf=document.getElementById("genfile");
+gen.addEventListener("click",function(){
+  gen.disabled=true;prog.hidden=false;gf.hidden=true;
+  msg.textContent="Collecting the register entry, the confirmed triage, 12 controls and 3 gaps…";
+  var bar=prog.querySelector("i");bar.style.width="0";
+  setTimeout(function(){bar.style.width="55%";msg.textContent="Rendering the gap list and the activity history…"},60);
+  setTimeout(function(){bar.style.width="100%";msg.textContent="Pack generated from the register as it stands at 2026-10-02 14:26 CET."},700);
+  setTimeout(function(){
+    prog.hidden=true;gf.hidden=false;gen.disabled=false;
+    ACTS.unshift({w:"2026-10-02",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09"});
+    renderTL();
+  },1250);
+});
+
+/* ---------------- routing ---------------- */
+function paintPath(name){
+  var h="";
+  for(var i=0;i<PATH.length;i++){
+    if(i)h+='<span class="sep" aria-hidden="true">›</span>';
+    h+='<a href="#'+PATH[i][0]+'"'+(PATH[i][0]===name?' aria-current="true"':'')+'>'+PATH[i][1]+'</a>';
+  }
+  document.getElementById("dots").innerHTML=h;
+}
+
+function route(){
+  var name=(location.hash||"#register").replace("#","");
+  if(!document.getElementById("s-"+name))name="register";
+  var all=document.querySelectorAll(".screen");
+  for(var i=0;i<all.length;i++)all[i].classList.toggle("on",all[i].id==="s-"+name);
+  var navs=document.querySelectorAll("[data-nav]");
+  var navFor={register:"register",usecase:"register",triage:"register",evidence:"evidence",gaps:"gaps",export:"export",activity:"activity"};
+  for(var j=0;j<navs.length;j++){
+    if(navs[j].getAttribute("data-nav")===navFor[name])navs[j].setAttribute("aria-current","page");
+    else navs[j].removeAttribute("aria-current");
+  }
+  paintPath(name);
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
