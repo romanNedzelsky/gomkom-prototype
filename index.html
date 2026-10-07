@@ -49,12 +49,21 @@ button{font:inherit;color:inherit}
 
 /* boundary strip — always on screen, never only in a footer */
 .boundary{background:#0f172a;color:#e8ecf3;position:sticky;top:60px;z-index:29}
-.boundary .in{max-width:1440px;margin:0 auto;padding:7px 32px;display:flex;gap:10px;align-items:center;font-size:12.5px;line-height:18px}
+.boundary .in{max-width:1440px;margin:0 auto;padding:7px 32px;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:18px}
 .boundary strong{color:#fff;font-weight:650}
-.boundary .dot{width:6px;height:6px;border-radius:999px;background:#f59e0b;flex:none}
+.boundary .dot{width:6px;height:6px;border-radius:999px;background:#f59e0b;flex:none;margin-top:6px}
+/* dated applicability disclosure, light-on-dark variant of details.cite */
+.boundary details.cite>summary{color:#bcd0ff}
+.boundary details.cite .body{border-left-color:#3b4a63;color:#d7dee9;max-width:104ch}
+.boundary details.cite .body .src{color:#9fb0c6}
+.boundary details.cite .body b{color:#fff;font-weight:650}
+.boundary details.cite .body ul{margin:8px 0;padding-left:18px}
+.boundary details.cite .body li{margin:0 0 4px}
 
 .shell{max-width:1440px;margin:0 auto;padding:0 32px;display:flex;gap:32px;align-items:flex-start}
-.side{width:232px;flex:none;padding:24px 0 40px;position:sticky;top:104px}
+/* sticky offset = topbar (60px) + the boundary strip, which is now three lines
+   tall at 1280px because it carries the dated applicability statement */
+.side{width:232px;flex:none;padding:24px 0 40px;position:sticky;top:164px}
 .side .lbl{font-size:11px;font-weight:660;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 10px;margin:0 0 8px}
 .side nav{display:flex;flex-direction:column;gap:2px;margin-bottom:24px}
 .side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);text-decoration:none;color:var(--ink2);font-size:13.5px;font-weight:500}
@@ -260,6 +269,17 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
 /* --- additions for the pack-aligned data model --- */
 /* severity: medium-high, needed to carry the evidence pack's own scale */
 .pill.mh{background:#fdeee3;border-color:#f0c4a3;color:#9a3d12}
+
+/* applicability marker — when a duty binds. Deliberately NOT on the ok/warn/bad
+   status scale: a duty's date is orthogonal to whether you have the document.
+   Live duties take the brand tint, deferred duties stay neutral; the words carry
+   the meaning on their own, colour only reinforces it. */
+.appl{display:inline-flex;align-items:baseline;gap:5px;margin-top:5px;border-radius:var(--r-sm);
+      padding:1px 7px;font-size:11.5px;line-height:17px;font-weight:600;border:1px solid;
+      background:var(--neu-bg);border-color:var(--neu-line);color:var(--neu);white-space:normal}
+.appl .gl{font-size:9px;line-height:1;position:relative;top:-1px}
+.appl.live{background:var(--brand-soft);border-color:var(--brand-line);color:var(--brand-ink)}
+.track>.appl{margin:0 0 8px}
 .notinc{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:#fbfcfd;font-size:12.5px;line-height:19px;color:var(--ink2)}
 .notinc b{display:block;color:var(--ink);font-size:12.5px;margin-bottom:6px}
 .notinc ul{margin:0;padding-left:18px}
@@ -276,7 +296,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
     <div class="org"><b>Stavenhorst Logistik GmbH</b><span>640 employees · DE + NL</span></div>
     <span class="grow"></span>
     <span class="chip proto">Prototype · fictional data</span>
-    <span class="chip rule" title="Rule pack version">Rule pack EU-EMPL-2026.09</span>
+    <span class="chip rule" title="Rule pack version">Rule pack EU-EMPL-2026.10</span>
     <div class="who"><span class="av" aria-hidden="true">SH</span><span><b>Sabine Hoffmann</b><small>Group Head of HR</small></span></div>
   </div>
 </header>
@@ -284,7 +304,23 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
 <div class="boundary">
   <div class="in">
     <span class="dot" aria-hidden="true"></span>
-    <span><strong>Operational evidence layer.</strong> Every classification result here is indicative, cites the provision it relies on, and requires confirmation by a named person. This is not legal advice, not a conformity assessment under Regulation (EU) 2024/1689, and carries no legal sign-off.</span>
+    <span><strong>Operational evidence layer.</strong> Every classification result here is indicative, cites the provision it relies on, and requires confirmation by a named person. This is not legal advice, not a conformity assessment under Regulation (EU) 2024/1689, and carries no legal sign-off. <strong>AI Act Art.&nbsp;26 deployer duties for Annex&nbsp;III high-risk systems apply from 2 December 2027. GDPR, national co-determination and the Art.&nbsp;5 prohibitions apply now.</strong>
+      <details class="cite" id="appl-disclosure">
+        <summary>Which duties bind today, and which do not</summary>
+        <div class="body">
+          Four obligation tracks, four different dates. This register keeps them apart rather than collapsing them into one status, because a <i>Partial</i> row on a duty that is not yet in force is not the same finding as a <i>Partial</i> row on one that is.
+          <ul>
+            <li><b>Applies now</b> &#8212; GDPR (Art. 5, 13, 22, 35). Controls C11 and C12, and triage question 5.</li>
+            <li><b>Applies now</b> &#8212; national works-council co-determination: BetrVG &#167;87(1) No. 6 (DE) and WOR Art. 27(1) (NL). Control C10. National law, not an EU Regulation.</li>
+            <li><b>Applies now, since 2 February 2025</b> &#8212; AI Act Art. 5 prohibited practices, and the AI-literacy provisions. Triage question 3, the emotion-inference screen.</li>
+            <li><b>Applies now, since 2 August 2026</b> &#8212; AI Act Art. 50 transparency obligations. Enforcement by the AI Office and Member State market-surveillance authorities has also been operative since that date.</li>
+            <li><b>Applies from 2 December 2027</b> &#8212; AI Act Art. 26 deployer duties for Annex III high-risk systems, and the Art. 86(1) right to an explanation. Controls C1&#8211;C9 and C13 in this register.</li>
+          </ul>
+          <b>Why that date.</b> The Digital Omnibus entered into force on 27 July 2026 and extended the application date for Annex III high-risk AI-system rules &#8212; which is where recruitment and selection sit &#8212; to 2 December 2027. AI embedded in Annex I products: 2 August 2028. A <i>Partial</i> or <i>Missing</i> status on an Art. 26 control in this register is therefore a readiness gap against 2 December 2027, not a duty contravened today, and the target dates on those rows are voluntary internal targets rather than statutory deadlines. The classification questions &#8212; is this an AI system, is it high-risk, is a prohibited practice engaged &#8212; are unaffected by the change. None of this is legal advice.
+          <span class="src">Sources, fetched 2026-10-07: digital-strategy.ec.europa.eu/en/faqs/navigating-ai-act (page last updated 7 August 2026) &#183; digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai (page last updated 3 August 2026) &#183; rule pack EU-EMPL-2026.10</span>
+        </div>
+      </details>
+    </span>
   </div>
 </div>
 
@@ -293,8 +329,8 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
     <p class="lbl">Workspace</p>
     <nav aria-label="Main">
       <a href="#register" data-nav="register">Register <span class="n">5</span></a>
-      <a href="#gaps" data-nav="gaps">Gaps <span class="n">6</span></a>
-      <a href="#evidence" data-nav="evidence">Evidence <span class="n">9/12</span></a>
+      <a href="#gaps" data-nav="gaps">Gaps <span class="n">7</span></a>
+      <a href="#evidence" data-nav="evidence">Evidence <span class="n">9/13</span></a>
       <a href="#export" data-nav="export">Exports</a>
       <a href="#activity" data-nav="activity">Activity</a>
     </nav>
@@ -322,8 +358,8 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
     <div class="tiles">
       <div class="tile"><p class="k">Use cases</p><p class="v num">5</p><p class="m">4 in production · 1 pilot</p></div>
       <div class="tile"><p class="k">Indicative high-risk</p><p class="v num">3</p><p class="m">2 confirmed · 1 awaiting confirmation</p></div>
-      <div class="tile"><p class="k">Open gaps</p><p class="v num">6</p><p class="m">2 high · 1 med-high · 1 medium · 2 low</p></div>
-      <div class="tile"><p class="k">Next 30 days</p><p class="v num">1</p><p class="m">review due · 1 use case never triaged</p></div>
+      <div class="tile"><p class="k">Open gaps</p><p class="v num">7</p><p class="m">2 high · 1 med-high · 2 medium · 2 low</p></div>
+      <div class="tile"><p class="k">Next 30 days</p><p class="v num">2</p><p class="m">reviews due · 1 use case never triaged</p></div>
     </div>
 
     <div class="card">
@@ -359,7 +395,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <td><span class="role ranks">Ranks or filters candidates</span></td>
             <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · confirmed by A. Cordes</span></td>
             <td><span class="t1">Sabine Hoffmann</span><span class="t2">Group Head of HR</span></td>
-            <td><span class="bar part" role="img" aria-label="9 of 12 controls evidenced"><i style="width:75%"></i></span><span class="t2 num">9 of 12 evidenced</span></td>
+            <td><span class="bar part" role="img" aria-label="9 of 13 controls evidenced"><i style="width:69%"></i></span><span class="t2 num">9 of 13 evidenced</span></td>
             <td><span class="num">2027-03-28</span><span class="t2">6-month cycle</span></td>
           </tr>
           <tr class="rowlink" data-tags="untriaged de" tabindex="0">
@@ -368,7 +404,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <td><span class="role informs">Informs a human decision</span></td>
             <td><span class="pill warn"><span class="g" aria-hidden="true">&#9650;</span>Needs triage</span><span class="t2">never triaged</span></td>
             <td><span class="t1">Frank Oelkers</span><span class="t2">Warehouse Operations Manager</span></td>
-            <td><span class="bar low" role="img" aria-label="4 of 12 controls evidenced"><i style="width:33%"></i></span><span class="t2 num">4 of 12 evidenced</span></td>
+            <td><span class="bar low" role="img" aria-label="4 of 13 controls evidenced"><i style="width:31%"></i></span><span class="t2 num">4 of 13 evidenced</span></td>
             <td><span class="num">2026-11-03</span><span class="t2">in 4 weeks</span></td>
           </tr>
           <tr class="rowlink" data-tags="high nl" tabindex="0">
@@ -377,8 +413,8 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <td><span class="role ranks">Ranks or filters candidates</span></td>
             <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · awaiting confirmation</span></td>
             <td><span class="t1">Tomasz Werner</span><span class="t2">Recruiting Lead, NL</span></td>
-            <td><span class="bar low" role="img" aria-label="2 of 12 controls evidenced"><i style="width:17%"></i></span><span class="t2 num">2 of 12 evidenced</span></td>
-            <td><span class="num">2026-10-20</span><span class="t2" style="color:var(--bad);font-weight:600">due in 18 days</span></td>
+            <td><span class="bar low" role="img" aria-label="2 of 13 controls evidenced"><i style="width:15%"></i></span><span class="t2 num">2 of 13 evidenced</span></td>
+            <td><span class="num">2026-10-20</span><span class="t2" style="color:var(--bad);font-weight:600">due in 13 days</span></td>
           </tr>
           <tr class="rowlink" data-tags="high de nl" tabindex="0">
             <td><span class="t1">Performance review analytics</span><span class="t2">UC-004 · Flintmoor Performance Signals · Flintmoor Digital GmbH</span></td>
@@ -386,8 +422,8 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <td><span class="role informs">Informs a human decision</span></td>
             <td><span class="pill bad"><span class="g" aria-hidden="true">&#9679;</span>High-risk</span><span class="t2">indicative · confirmed by L. Bergmann</span></td>
             <td><span class="t1">Liesbeth Maas</span><span class="t2">HRIS Lead, NL</span></td>
-            <td><span class="bar part" role="img" aria-label="6 of 12 controls evidenced"><i style="width:50%"></i></span><span class="t2 num">6 of 12 evidenced</span></td>
-            <td><span class="num">2027-01-12</span><span class="t2">in 15 weeks</span></td>
+            <td><span class="bar part" role="img" aria-label="6 of 13 controls evidenced"><i style="width:46%"></i></span><span class="t2 num">6 of 13 evidenced</span></td>
+            <td><span class="num">2027-01-12</span><span class="t2">in 14 weeks</span></td>
           </tr>
           <tr class="rowlink" data-tags="de" tabindex="0">
             <td><span class="t1">Training recommendations</span><span class="t2">UC-005 · Orvenda Learning Paths · Orvenda AI B.V.</span></td>
@@ -396,12 +432,12 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <td><span class="pill ok"><span class="g" aria-hidden="true">&#10003;</span>Not high-risk</span><span class="t2">indicative · confirmed by P. Nair</span></td>
             <td><span class="t1">Priya Nair</span><span class="t2">Group IT Systems Owner</span></td>
             <td><span class="bar" role="img" aria-label="4 of 5 controls evidenced"><i style="width:80%"></i></span><span class="t2 num">4 of 5 evidenced</span></td>
-            <td><span class="num">2027-02-28</span><span class="t2">in 22 weeks</span></td>
+            <td><span class="num">2027-02-28</span><span class="t2">in 21 weeks</span></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Last change 2026-09-28 by Sabine Hoffmann. No row can be marked reviewed until it carries a named owner and a decision role. <a href="#usecase">Open UC-001</a> to see the entry behind a row.</p>
+    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Last change 2026-10-07 by Sabine Hoffmann &#8212; rule pack EU-EMPL-2026.10 applied. No row can be marked reviewed until it carries a named owner and a decision role. <a href="#usecase">Open UC-001</a> to see the entry behind a row.</p>
   </section>
 
   <!-- ============ 2. USE CASE DETAIL ============ -->
@@ -444,10 +480,10 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <dt>System name</dt><dd>TalentSieve <span class="t2">v3.2 · recruitment-screening module</span></dd>
             <dt>Vendor</dt><dd>Orvenda AI B.V. <span class="t2">Amsterdam, NL</span></dd>
             <dt>Vendor role</dt><dd><span class="pill neu">Provider</span>
-              <details class="cite"><summary>Art. 3(3)</summary><div class="body">The vendor develops the system and places it on the market under its own name, which is what makes it the provider.<span class="src">Art. 3(3), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09</span></div></details>
+              <details class="cite"><summary>Art. 3(3)</summary><div class="body">The vendor develops the system and places it on the market under its own name, which is what makes it the provider.<span class="src">Art. 3(3), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.10</span></div></details>
             </dd>
             <dt>Our role</dt><dd><span class="pill brand">Deployer</span>
-              <details class="cite"><summary>What a deployer is, and is not</summary><div class="body">A deployer uses an AI system under its own authority in the course of its activity. Deployer duties are not provider duties: you are not asked to carry out a conformity assessment or issue a declaration of conformity &#8212; you are asked to use the system as instructed, keep a named human in the loop, check the input data you control, monitor it, inform the people affected, and keep logs.<span class="src">Art. 3(4) and Art. 26, Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09</span></div></details>
+              <details class="cite"><summary>What a deployer is, and is not</summary><div class="body">A deployer uses an AI system under its own authority in the course of its activity. Deployer duties are not provider duties: you are not asked to carry out a conformity assessment or issue a declaration of conformity &#8212; you are asked to use the system as instructed, keep a named human in the loop, check the input data you control, monitor it, inform the people affected, and keep logs. Those Art. 26 duties apply to Annex III high-risk systems from 2 December 2027; the deployer/provider split itself is a classification point and is unaffected by that date.<span class="src">Art. 3(4) and Art. 26, Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.10</span></div></details>
             </dd>
             <dt>Purpose, in plain language</dt><dd>Parses incoming CVs and application-form answers for warehouse-operative and logistics-supervisor vacancies, scores them against role criteria set by Stavenhorst recruiters, and produces a ranked shortlist for human review. It does not process video, audio or biometric signals.</dd>
             <dt>Lifecycle state</dt><dd><span class="pill ok">Production</span> <span class="t2">go-live 2026-06-15</span></dd>
@@ -472,12 +508,13 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
         <div class="card" style="margin-bottom:20px">
           <div class="ch"><h2>Status</h2></div>
           <div class="cb">
-            <div class="alert bad" style="margin-bottom:14px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use &#8212; indicative.</b> Confirmed by Almuth Cordes, employment counsel, on 2026-09-26. One question remains referred to counsel.</span></div>
+            <div class="alert bad" style="margin-bottom:14px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use &#8212; indicative.</b> Confirmed by Almuth Cordes, employment counsel, on 2026-09-26. The classification holds today; the Art. 26 deployer duties that follow from it apply from 2 December 2027. One question remains referred to counsel.</span></div>
             <dl class="kv" style="grid-template-columns:140px 1fr">
               <dt>Triage</dt><dd>Confirmed <span class="t2">A. Cordes · 2026-09-26</span></dd>
-              <dt>Evidence</dt><dd><span class="bar part" role="img" aria-label="9 of 12 controls evidenced"><i style="width:75%"></i></span><span class="t2 num">9 evidenced · 2 partial · 1 missing</span></dd>
-              <dt>Open gaps</dt><dd><span class="num">3</span> <span class="t2">1 high · 1 medium-high · 1 medium</span></dd>
-              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.09</span></dd>
+              <dt>Evidence</dt><dd><span class="bar part" role="img" aria-label="9 of 13 controls evidenced"><i style="width:69%"></i></span><span class="t2 num">9 evidenced · 3 partial · 1 missing</span></dd>
+              <dt>Open gaps</dt><dd><span class="num">4</span> <span class="t2">1 high · 1 medium-high · 2 medium</span><span class="t2">3 are readiness gaps against 2027-12-02 (C4, C9, C13) · 1 is live national law (C10)</span></dd>
+              <dt>Applicability</dt><dd><span class="appl"><span class="gl" aria-hidden="true">&#9675;</span><span class="vh">Not applicable yet. </span>AI Act Art. 26 duties &#183; apply from 2027-12-02</span><span class="appl live" style="margin-left:6px"><span class="gl" aria-hidden="true">&#9679;</span><span class="vh">Applicable now. </span>GDPR and DE/NL co-determination &#183; apply now</span><span class="t2">C1&#8211;C9 and C13 are Art. 26/86 rows. C10 is national law, C11 and C12 are GDPR, C7 has one limb in each track. The full dated statement is in the strip at the top of every screen, under &#8220;Which duties bind today&#8221;.</span></dd>
+              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.10</span><span class="t2">applied 2026-10-07 &#183; timeline correction</span></dd>
             </dl>
             <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn sm" data-go="gaps">See gaps</button>
@@ -506,10 +543,10 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
         <p class="sub">Six plain questions. Each answer shows the provision it relies on, and nothing is treated as settled until a named person confirms it.</p>
       </div>
       <span class="grow"></span>
-      <span class="chip rule">Rule pack EU-EMPL-2026.09</span>
+      <span class="chip rule">Rule pack EU-EMPL-2026.10</span>
     </div>
 
-    <div class="alert info" style="margin-bottom:20px"><span class="ai" aria-hidden="true">i</span><span><b>Indicative, not legal advice.</b> This triage tells you what the provisions appear to require for the facts you entered. It is not a legal opinion, not a conformity assessment, and it does not sign anything off. Where a point is genuinely unsettled, it is recorded as unsettled rather than answered &#8212; see question 5.</span></div>
+    <div class="alert info" style="margin-bottom:20px"><span class="ai" aria-hidden="true">i</span><span><b>Indicative, not legal advice.</b> This triage tells you what the provisions appear to require for the facts you entered. It is not a legal opinion, not a conformity assessment, and it does not sign anything off. Where a point is genuinely unsettled, it is recorded as unsettled rather than answered &#8212; see question 5. Every answer also carries <b>when</b> the duty behind it binds: the classification questions are settled law today, the Art. 5 prohibition in question 3 is in force today, and the Art. 26 deployer duties apply from 2 December 2027.</span></div>
 
     <div class="tri">
       <div class="rail">
@@ -527,7 +564,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
       <div>
         <p class="crumb"><a href="#register">Register</a> &#8250; <a href="#usecase">UC-001</a> &#8250; Evidence</p>
         <h1 id="h-evidence">Evidence checklist</h1>
-        <p class="sub">Twelve controls for this use case. Each row is a document that exists or does not &#8212; status is a fact about your filing cabinet, not an opinion.</p>
+        <p class="sub">Thirteen controls for this use case. Each row is a document that exists or does not &#8212; status is a fact about your filing cabinet, not an opinion.</p>
       </div>
       <span class="grow"></span>
       <button class="btn" data-go="gaps">See gaps</button>
@@ -536,14 +573,16 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
 
     <div class="tiles" style="grid-template-columns:repeat(3,1fr)">
       <div class="tile"><p class="k">Evidenced</p><p class="v num" style="color:var(--ok)">9</p><p class="m">document on file and verified</p></div>
-      <div class="tile"><p class="k">Partial</p><p class="v num" style="color:var(--warn)">2</p><p class="m">something on file, not enough</p></div>
+      <div class="tile"><p class="k">Partial</p><p class="v num" style="color:var(--warn)">3</p><p class="m">something on file, not enough</p></div>
       <div class="tile"><p class="k">Missing</p><p class="v num" style="color:var(--bad)">1</p><p class="m">nothing on file</p></div>
     </div>
 
+    <div class="alert info" style="margin-bottom:20px"><span class="ai" aria-hidden="true">i</span><span><b>Status is about your filing cabinet. It is not a finding that a duty has been breached.</b> Nine of these thirteen rows are AI Act Art. 26 and Art. 86(1) deployer duties for Annex III high-risk systems, and those apply from <b>2 December 2027</b>. A <i>Partial</i> or <i>Missing</i> status on one of them is a readiness gap against that date, and its &#8220;next review&#8221; date is a voluntary internal target, not a statutory deadline. The rows that <b>do</b> bind today are C10 (national works-council co-determination), C11 and C12 (GDPR), and the GDPR limb of C7 &#8212; plus the Art. 5 prohibition screened at triage question 3, in force since 2 February 2025. Each row below says which it is.</span></div>
+
     <div class="card">
-      <div class="ch"><h2>Controls</h2><p>An all-green checklist on a system three months live would itself be a red flag.</p></div>
+      <div class="ch"><h2>Controls</h2><p>An all-green checklist on a system three months live would itself be a red flag. The <b>Applies</b> marker under each status says when that duty binds.</p></div>
       <table>
-        <caption class="vh">Control checklist for UC-001 with status, owner, evidence document, last verified date and next review date.</caption>
+        <caption class="vh">Control checklist for UC-001 with status, the date on which each duty applies, evidence document, owner, last verified date and next review date.</caption>
         <thead>
           <tr>
             <th scope="col">Control</th>
@@ -573,16 +612,18 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
     </div>
 
     <div class="tiles">
-      <div class="tile"><p class="k">Open gaps</p><p class="v num">6</p><p class="m">across 4 of 5 use cases</p></div>
+      <div class="tile"><p class="k">Open gaps</p><p class="v num">7</p><p class="m">across 4 of 5 use cases</p></div>
       <div class="tile"><p class="k">High &amp; med-high</p><p class="v num" style="color:var(--bad)">3</p><p class="m">2 high · 1 medium-high</p></div>
-      <div class="tile"><p class="k">Due in 30 days</p><p class="v num">2</p><p class="m">both with a named owner</p></div>
-      <div class="tile"><p class="k">Oldest open gap</p><p class="v num">C10</p><p class="m">works-council record, DE entity</p></div>
+      <div class="tile"><p class="k">Due in 30 days</p><p class="v num">3</p><p class="m">all with a named owner</p></div>
+      <div class="tile"><p class="k">Oldest open gap</p><p class="v num">C10</p><p class="m">works-council record, DE entity &#183; live now</p></div>
     </div>
 
+    <div class="alert info" style="margin-bottom:20px"><span class="ai" aria-hidden="true">i</span><span><b>Two of these are live today. Five are readiness gaps against 2 December 2027.</b> The works-council gap (C10) is a national-law exposure under BetrVG &#167;87(1) No. 6 and WOR Art. 27(1), live now; the missing DPIA reference on UC-004 is a live GDPR item. The remaining five sit under AI Act Art. 26, which applies to Annex III high-risk systems from <b>2 December 2027</b> &#8212; they are not duties contravened today, and their target dates are voluntary internal targets the organisation set for itself, not statutory deadlines. Severity still reflects operational risk: an incident path with no owner is a real exposure whatever the date. Every row says which track it is on.</span></div>
+
     <div class="card">
-      <div class="ch"><h2>Open gaps</h2><p>Six open. Three belong to the CV-screening use case.</p></div>
+      <div class="ch"><h2>Open gaps</h2><p>Seven open. Four belong to the CV-screening use case.</p></div>
       <table>
-        <caption class="vh">Open gaps across all AI use cases, sorted by severity then target date, each with a named owner and target date.</caption>
+        <caption class="vh">Open gaps across all AI use cases, sorted by severity then target date, each with the date on which the underlying duty applies, a named owner and a target date.</caption>
         <thead>
           <tr>
             <th scope="col">Gap</th>
@@ -596,7 +637,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
         <tbody id="tb-gaps"></tbody>
       </table>
     </div>
-    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Severities follow the rule pack, not a house scale. &#8220;Why it matters&#8221; is cited on every row &#8212; open a row to read it.</p>
+    <p style="margin:12px 0 0;font-size:12.5px;color:var(--muted)">Severities follow the rule pack, not a house scale. &#8220;Why it matters&#8221; is cited on every row &#8212; open a row to read it, and it states whether the duty binds today or from 2 December 2027.</p>
   </section>
 
   <!-- ============ 6. EXPORT ============ -->
@@ -615,7 +656,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
           <div class="ch"><h2>Scope</h2></div>
           <div class="cb">
             <div class="cl">
-              <label><input type="radio" name="scope" checked><span><b>UC-001 &#8212; AI-assisted CV screening</b><span class="t2">Both entities · 12 controls · 3 open gaps</span></span></label>
+              <label><input type="radio" name="scope" checked><span><b>UC-001 &#8212; AI-assisted CV screening</b><span class="t2">Both entities · 13 controls · 4 open gaps</span></span></label>
               <label><input type="radio" name="scope"><span>All 5 use cases<span class="t2">Longer pack (24 pages). Not recommended for a first conversation.</span></span></label>
               <label><input type="radio" name="scope"><span>Stavenhorst Logistik GmbH (DE entity) only<span class="t2">4 use cases</span></span></label>
             </div>
@@ -626,27 +667,27 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
           <div class="ch"><h2>What goes in the pack</h2><p>Seven sections. The cover section cannot be switched off.</p></div>
           <div class="cb">
             <div class="cl">
-              <label><input type="checkbox" checked disabled><span>1 · Cover and scope statement<span class="t2">Always included. Carries the boundary statement: operational evidence, not legal advice, not a conformity assessment, no legal sign-off.</span></span></label>
+              <label><input type="checkbox" checked disabled><span>1 · Cover and scope statement<span class="t2">Always included. Carries the boundary statement &#8212; operational evidence, not legal advice, not a conformity assessment, no legal sign-off &#8212; and the dated applicability block: which duties apply now, and which apply from 2 December 2027.</span></span></label>
               <label><input type="checkbox" checked><span>2 · Register entry<span class="t2">Structured fields including the decision role and both named owners.</span></span></label>
               <label><input type="checkbox" checked><span>3 · Employment triage result<span class="t2">The six questions, the provisions relied on, who confirmed each one, and the question still with counsel.</span></span></label>
-              <label><input type="checkbox" checked><span>4 · Control checklist with evidence status<span class="t2">12 rows · 9 evidenced, 2 partial, 1 missing.</span></span></label>
-              <label><input type="checkbox" checked><span>5 · Gap list with owners and dates<span class="t2">3 gaps for this use case, sorted by severity.</span></span></label>
+              <label><input type="checkbox" checked><span>4 · Control checklist with evidence status<span class="t2">13 rows · 9 evidenced, 3 partial, 1 missing. Each row carries the date its duty applies.</span></span></label>
+              <label><input type="checkbox" checked><span>5 · Gap list with owners and dates<span class="t2">4 gaps for this use case, sorted by severity. Each one says whether it is live today or a readiness gap against 2 December 2027.</span></span></label>
               <label><input type="checkbox" checked><span>6 · Activity and decision history<span class="t2">Append-only record of who decided what, and when.</span></span></label>
               <label><input type="checkbox" checked><span>7 · Sources and rule-pack version<span class="t2">Every provision cited, with the date each source was last checked.</span></span></label>
             </div>
 
-            <div class="alert warn" style="margin-top:16px"><span class="ai" aria-hidden="true">&#9650;</span><span><b>3 open gaps will be printed in this pack.</b> One high, one medium-high, one medium &#8212; each with its named owner and target date. There is no setting that removes them: a pack that hides its own gaps is worth nothing to the person you hand it to.</span></div>
+            <div class="alert warn" style="margin-top:16px"><span class="ai" aria-hidden="true">&#9650;</span><span><b>4 open gaps will be printed in this pack.</b> One high, one medium-high, two medium &#8212; each with its named owner and target date. <b>Three of the four (C4, C9, C13) are readiness gaps against the 2 December 2027 application date for the Art. 26 deployer duties, not duties contravened today; C10 is a national works-council exposure that is live now.</b> The pack says so on its cover. There is no setting that removes the gaps: a pack that hides its own gaps is worth nothing to the person you hand it to.</span></div>
 
             <div class="navrow" style="border-top:0;padding-top:4px">
               <button class="btn pri" id="gen">Generate pack</button>
-              <span class="t2" style="color:var(--muted);font-size:12.5px">as Sabine Hoffmann, Group Head of HR · 2026-10-02 14:26 CET</span>
+              <span class="t2" style="color:var(--muted);font-size:12.5px">as Sabine Hoffmann, Group Head of HR · 2026-10-07 14:26 CET</span>
             </div>
             <div class="prog" id="prog" hidden><i></i></div>
             <p id="genmsg" style="margin:8px 0 0;font-size:12.5px;color:var(--muted)" aria-live="polite">Nothing leaves your workspace. The pack is generated from the register as it stands right now.</p>
             <div id="genfile" hidden style="margin-top:14px">
               <div class="file">
                 <span class="ic" aria-hidden="true">PDF</span>
-                <span><b>Stavenhorst-Logistik_CV-Screening_Evidence-Pack_2026-10-02.pdf</b><small>7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09 · generated 2026-10-02 14:26 CET by Sabine Hoffmann</small></span>
+                <span><b>Stavenhorst-Logistik_CV-Screening_Evidence-Pack_2026-10-07.pdf</b><small>7 pages · 4 gaps flagged · rule pack EU-EMPL-2026.10 · generated 2026-10-07 14:26 CET by Sabine Hoffmann</small></span>
               </div>
               <p style="margin:10px 0 0;font-size:12.5px;color:var(--muted)">Recorded in the <a href="#activity">activity history</a>. If the register changes afterwards, this pack does not &#8212; regenerate it and both versions stay on the record.</p>
             </div>
@@ -661,9 +702,10 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
             <dl class="kv" style="grid-template-columns:132px 1fr">
               <dt>Organisation</dt><dd>Stavenhorst Logistik GmbH<span class="t2">640 employees · 430 DE / 210 NL</span></dd>
               <dt>Use case</dt><dd>AI-assisted CV screening<span class="t2">UC-001 · TalentSieve v3.2</span></dd>
-              <dt>Generated</dt><dd><span class="num">2026-10-02 14:26 CET</span></dd>
+              <dt>Generated</dt><dd><span class="num">2026-10-07 14:26 CET</span></dd>
               <dt>Generated by</dt><dd>Sabine Hoffmann<span class="t2">Group Head of HR</span></dd>
-              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.09</span><span class="t2">sources last checked 2026-09-26</span></dd>
+              <dt>Rule pack</dt><dd><span style="font-family:var(--mono);font-size:12.5px">EU-EMPL-2026.10</span><span class="t2">sources last checked 2026-10-07</span></dd>
+              <dt>Applicability</dt><dd><span class="appl"><span class="gl" aria-hidden="true">&#9675;</span><span class="vh">Not applicable yet. </span>AI Act Art. 26 &#183; from 2027-12-02</span><span class="appl live" style="margin-left:6px"><span class="gl" aria-hidden="true">&#9679;</span><span class="vh">Applicable now. </span>GDPR &amp; national &#183; now</span><span class="t2">Printed on the cover as a dated block, with both Commission sources and the date they were fetched.</span></dd>
               <dt>Next review</dt><dd><span class="num">2027-03-28</span></dd>
             </dl>
           </div>
@@ -698,7 +740,7 @@ details.cite .body .src{display:block;font-family:var(--mono);font-size:11.5px;c
         <caption class="vh">Review schedule per use case with owner, cadence and next review date.</caption>
         <thead><tr><th scope="col">Use case</th><th scope="col">Owner</th><th scope="col">Cadence</th><th scope="col">Next review</th><th scope="col">Status</th></tr></thead>
         <tbody>
-          <tr><td><span class="t1">UC-003 Structured interview scoring</span><span class="t2">pilot, NL · triage awaiting confirmation</span></td><td>Tomasz Werner</td><td>Quarterly</td><td><span class="num">2026-10-20</span></td><td><span class="pill bad">Due in 18 days</span></td></tr>
+          <tr><td><span class="t1">UC-003 Structured interview scoring</span><span class="t2">pilot, NL · triage awaiting confirmation</span></td><td>Tomasz Werner</td><td>Quarterly</td><td><span class="num">2026-10-20</span></td><td><span class="pill bad">Due in 13 days</span></td></tr>
           <tr><td><span class="t1">UC-002 Warehouse shift optimisation</span><span class="t2">never triaged</span></td><td>Frank Oelkers</td><td>Semi-annual</td><td><span class="num">2026-11-03</span></td><td><span class="pill warn">In 4 weeks</span></td></tr>
           <tr><td><span class="t1">UC-004 Performance review analytics</span></td><td>Liesbeth Maas</td><td>Annual</td><td><span class="num">2027-01-12</span></td><td><span class="pill neu">Scheduled</span></td></tr>
           <tr><td><span class="t1">UC-005 Training recommendations</span></td><td>Priya Nair</td><td>Annual</td><td><span class="num">2027-02-28</span></td><td><span class="pill neu">Scheduled</span></td></tr>
@@ -739,7 +781,8 @@ var STEPS=[
   tone:"info",
   ind:"Indicative: yes, this is an AI system within scope.",
   cite:"TalentSieve infers, from CV and application-answer text, a ranking that influences a hiring recommendation. That matches the statutory definition of a machine-based system that infers, from the input it receives, how to generate outputs such as predictions, content, recommendations or decisions.",
-  src:"Art. 3(1), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.09",
+  src:"Art. 3(1), Regulation (EU) 2024/1689 · rule pack EU-EMPL-2026.10",
+  appl:{live:true,t:"Classification question · settled law today, unaffected by the 2027-12-02 date"},
   by:"Confirmed by Priya Nair, Group IT Systems Owner · 2026-09-24"},
 
  {t:"Is it used to recruit or select?",
@@ -749,20 +792,22 @@ var STEPS=[
   sel:0,
   tone:"bad",
   ind:"Indicative: yes — high-risk employment use.",
-  cite:"Stavenhorst is the employer, and TalentSieve is used to analyse and filter job applications and evaluate candidates for warehouse-operative and logistics-supervisor roles. Annex III point 4(a) covers AI systems intended to be used for the recruitment or selection of natural persons, in particular to analyse and filter job applications and to evaluate candidates.",
+  cite:"Stavenhorst is the employer, and TalentSieve is used to analyse and filter job applications and evaluate candidates for warehouse-operative and logistics-supervisor roles. Annex III point 4(a) covers AI systems intended to be used for the recruitment or selection of natural persons, in particular to analyse and filter job applications and to evaluate candidates. The classification itself holds today. The Art. 26 deployer duties that follow from it apply to Annex III high-risk systems from 2 December 2027, after the Digital Omnibus (in force 27 July 2026) extended that date — so the controls in the checklist are readiness items until then, not duties already owed.",
   src:"Art. 6(2) and Annex III, point 4(a), Regulation (EU) 2024/1689",
+  appl:{live:false,t:"The Art. 26 duties that follow · apply from 2027-12-02"},
   by:"Confirmed by Almuth Cordes, employment counsel (Cordes &amp; Partner Rechtsanwälte, Hamburg — fictional firm) · 2026-09-26"},
 
  {t:"Does it read emotion?",
   q:"Does it read emotion, mood or personality from voice, face or video?",
-  plain:"We ask this even when the answer is no, because the answer changes what you are allowed to buy — not just what you have to document.",
+  plain:"We ask this even when the answer is no, because the answer changes what you are allowed to buy — not just what you have to document. This is the one question on this triage whose answer bites today: the Art. 5 prohibitions have been in force since 2 February 2025.",
   ans:["No — the deployed module reads text only. The vendor’s video-sentiment add-on was evaluated and not purchased.","Yes — it scores video or voice signals","We are not sure which signals it uses"],
   sel:0,
   tone:"ok",
-  ind:"Indicative: the prohibition is not engaged by the configuration you have deployed.",
-  cite:"Art. 5(1)(f) prohibits inferring emotions of a natural person in the workplace, subject to a narrow medical or safety exception. The CV-screening module in scope processes text only (CV content, form answers) and does not infer emotion. Orvenda AI also sells an optional video-interview sentiment add-on; it was evaluated and deliberately not purchased, and that decision is what keeps this answer where it is.",
-  src:"Art. 5(1)(f), Regulation (EU) 2024/1689",
-  by:"Confirmed by Almuth Cordes · 2026-09-26 · Open item recorded: if the sentiment add-on is ever evaluated for interview stages, re-run this question before purchase, not after."},
+  ind:"Indicative: this prohibition is in force now, and it is not engaged by the configuration you have deployed.",
+  cite:"Art. 5(1)(f) prohibits inferring emotions of a natural person in the workplace, subject to a narrow medical or safety exception. The CV-screening module in scope processes text only (CV content, form answers) and does not infer emotion. Orvenda AI also sells an optional video-interview sentiment add-on; it was evaluated and deliberately not purchased, and that decision is what keeps this answer where it is. Timing matters on this one, and it is the opposite of the Art. 26 rows in the checklist: the Art. 5 prohibitions have applied since 2 February 2025 and are enforceable law today. The Digital Omnibus moved the application date for Annex III high-risk deployer duties to 2 December 2027; it did not touch Art. 5. A “yes” here would be a prohibited practice now, not a readiness gap for 2027.",
+  src:"Art. 5(1)(f), Regulation (EU) 2024/1689 — applicable since 2 February 2025",
+  appl:{live:true,t:"In force now · Art. 5 prohibitions apply since 2025-02-02 · not deferred to 2027"},
+  by:"Confirmed by Almuth Cordes · 2026-09-26 · Open item recorded: if the sentiment add-on is ever evaluated for interview stages, re-run this question before purchase, not after — this prohibition is live, so there is no grace period to plan against."},
 
  {t:"Must you tell candidates?",
   q:"Do you have to tell candidates that an AI system is involved?",
@@ -771,8 +816,9 @@ var STEPS=[
   sel:0,
   tone:"info",
   ind:"Indicative: two separate duties apply, and they stay tracked separately.",
-  cite:"Two duties, not one: (i) the AI Act deployer duty to inform natural persons that they are subject to the use of a high-risk AI system where it forms the basis of a decision concerning them; (ii) the GDPR duty to provide fair-processing information at the point the data is collected. Both are addressed here via the careers-page notice v3 and the application-form notice — control C7.",
+  cite:"Two duties, not one: (i) the AI Act deployer duty to inform natural persons that they are subject to the use of a high-risk AI system where it forms the basis of a decision concerning them; (ii) the GDPR duty to provide fair-processing information at the point the data is collected. Both are addressed here via the careers-page notice v3 and the application-form notice — control C7. They do not bind on the same date: the GDPR Art. 13 limb applies now, while the AI Act Art. 26(11) limb applies to Annex III high-risk systems from 2 December 2027. C7 is evidenced on both limbs, so the split changes nothing operationally here — but it is the reason C7 carries two applicability markers rather than one.",
   src:"Art. 26(11), Regulation (EU) 2024/1689 · Art. 13, Regulation (EU) 2016/679",
+  appl:{live:true,t:"GDPR Art. 13 applies now · AI Act Art. 26(11) applies from 2027-12-02"},
   by:"Confirmed by Lukas Bergmann, external DPO (Kettering Datenschutz Partner GmbH — fictional firm) · 2026-09-25"},
 
  {t:"Does GDPR add anything?",
@@ -784,6 +830,7 @@ var STEPS=[
   ind:"Indicative: the DPIA trigger applies and was met. One question is unsettled and is not answered here.",
   cite:"DPIA trigger: screening CVs at scale with an automated scoring model to inform hiring decisions is a systematic evaluation of personal aspects based on automated processing on which decisions affecting the candidate are based — within Art. 35(3)(a). DPIA-2026-014 was completed on 2026-08-20. Art. 22: whether the recruiter-review step is “meaningful” enough to place the output outside Art. 22(1)’s “based solely on automated processing” trigger, given the practical influence a ranked shortlist has on recruiter behaviour, is unsettled — it requires legal confirmation and is not resolved by this tool.",
   src:"Art. 22(1)–(3) and Art. 35(1), (3)(a), Regulation (EU) 2016/679",
+  appl:{live:true,t:"GDPR applies now · unaffected by the AI Act timeline change"},
   by:"DPIA trigger confirmed by Lukas Bergmann · 2026-09-25 · Art. 22 characterisation referred to counsel and recorded as unsettled, not answered."},
 
  {t:"Is a FRIA required?",
@@ -795,42 +842,63 @@ var STEPS=[
   ind:"Indicative: Article 27 does NOT apply to you for this use case.",
   cite:"Article 27 FRIA duties attach only to deployers that are bodies governed by public law, private entities providing public services, or deployers of the Annex III point 5(b)/(c) creditworthiness and life/health-insurance systems. Stavenhorst Logistik GmbH and Stavenhorst Logistiek B.V. are private logistics operators, and TalentSieve is an Annex III point 4(a) employment system. This is stated explicitly rather than presenting a FRIA as a universal duty.",
   src:"Art. 27(1), Regulation (EU) 2024/1689",
+  appl:{live:false,t:"Not applicable to this deployer · Art. 27 would apply from 2027-12-02 if it were"},
   by:"Confirmed by Almuth Cordes · 2026-09-26 · Re-run if the group ever deploys this scoring for a public-sector tender workforce, or the vendor adds a credit- or insurance-adjacent module."}
 ];
 
+/* `appl` carries when the duty binds. It is deliberately separate from `st` (the
+   evidence status): a Partial row on a duty that applies from 2027-12-02 is a
+   readiness gap, a Partial row on a duty in force today is a live exposure.
+   appl.live === true means at least one limb of the row binds today. */
+var APPL_FUT={live:false,t:"Art. 26 · from 2027-12-02"};
 var CONTROLS=[
- {id:"C1",c:"Human oversight design and named overseer",r:"A named person reviews the AI output before it affects a candidate.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Recruiter Review SOP v2 · RT-2026-06",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10"},
- {id:"C2",c:"Overseer competence and authority to override",r:"Overseers are trained and are actually allowed to override or reject the recommendation.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"RT-2026-06 training log · override rate tracked: 4.1% of flags overridden Jun–Aug 2026",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10"},
- {id:"C3",c:"Vendor documentation and instructions for use received",r:"The provider’s instructions for use are on file.",src:"Art. 26(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Orvenda AI Instructions for Use v3.2",o:"Priya Nair",lv:"2026-06-02",nr:"2027-06-02"},
- {id:"C4",c:"Input-data relevance and representativeness check",r:"The data used matches the intended purpose and the candidate population actually applying.",src:"Art. 26(4), Regulation (EU) 2024/1689",st:"warn",stl:"Partial",doc:"Vendor’s 2025 general fairness audit on file; no group-specific validation yet against the DE/NL applicant mix",o:"Priya Nair",lv:"2026-06-15 (vendor audit only)",nr:"2026-11-15 target",gap:true},
- {id:"C5",c:"Monitoring of operation and outcomes",r:"Operation and outcome patterns are reviewed on an agreed cadence.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Quarterly ranking-distribution review · Q2 2026 report",o:"Priya Nair",lv:"2026-08-31",nr:"2026-11-30"},
- {id:"C6",c:"Logging and log retention",r:"Automatically generated logs are kept for at least the statutory minimum of six months.",src:"Art. 26(6), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Log retention config: 12 months, exceeds the minimum",o:"Priya Nair",lv:"2026-09-01",nr:"2027-03-01"},
- {id:"C7",c:"Candidate information / transparency notice",r:"Candidates are told an AI system is used before they apply.",src:"Art. 26(11), Reg. (EU) 2024/1689 · Art. 13, Reg. (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"Careers-page notice v3 · application-form notice",o:"Sabine Hoffmann",lv:"2026-06-10",nr:"2027-06-10"},
- {id:"C8",c:"Route for a candidate to contest or request review",r:"A candidate can ask for a human explanation or review of an AI-influenced outcome.",src:"Art. 86(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"recruiting-review@stavenhorst-logistik.example intake process · SLA 10 business days",o:"Sabine Hoffmann",lv:"2026-07-01",nr:"2027-01-01"},
- {id:"C9",c:"Incident escalation path",r:"There is a defined path for AI-specific hiring incidents — suspected bias, wrong output — with a trigger, an owner and an SLA.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"bad",stl:"Missing",doc:"General IT incident process exists, but it has no AI-specific trigger, owner or SLA",o:"Sabine Hoffmann",lv:"—",nr:"2026-10-31 target",gap:true},
- {id:"C10",c:"Works-council information / consultation record (DE entity)",r:"The works council was informed and consulted before deployment, under national co-determination rights.",src:"Betriebsverfassungsgesetz (DE) §87(1) No. 6 — national law, tracked separately from the EU provisions",st:"warn",stl:"Partial",doc:"Betriebsrat informed 2026-05-20 (minutes on file); no signed Betriebsvereinbarung yet; NL Ondernemingsraad consent process under WOR Art. 27(1) not yet started",o:"Jonas Reiter (Betriebsrat chair) / Sabine Hoffmann",lv:"2026-05-20 (DE, informal only)",nr:"2026-12-01 target",gap:true},
- {id:"C11",c:"DPIA reference",r:"A data-protection impact assessment has been carried out and is on file.",src:"Art. 35(1), (3)(a), Regulation (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"DPIA-2026-014",o:"Lukas Bergmann (external DPO)",lv:"2026-08-20",nr:"2027-08-20"},
- {id:"C12",c:"Retention and deletion",r:"Candidate data is deleted on a defined schedule.",src:"Art. 5(1)(e), Reg. (EU) 2016/679 · retention period also informed by German AGG claim-limitation practice (national law)",st:"ok",stl:"Evidenced",doc:"Retention rule: 6 months after role close · automated purge job PJ-114",o:"Priya Nair",lv:"2026-09-05",nr:"2027-03-05"}
+ {id:"C1",c:"Human oversight design and named overseer",r:"A named person reviews the AI output before it affects a candidate.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Recruiter Review SOP v2 · RT-2026-06",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10",appl:APPL_FUT},
+ {id:"C2",c:"Overseer competence and authority to override",r:"Overseers are trained and are actually allowed to override or reject the recommendation.",src:"Art. 26(2), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"RT-2026-06 training log · override rate tracked: 4.1% of flags overridden Jun–Aug 2026",o:"Sabine Hoffmann",lv:"2026-09-10",nr:"2027-03-10",appl:APPL_FUT},
+ {id:"C3",c:"Vendor documentation and instructions for use received",r:"The provider’s instructions for use are on file.",src:"Art. 26(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Orvenda AI Instructions for Use v3.2",o:"Priya Nair",lv:"2026-06-02",nr:"2027-06-02",appl:APPL_FUT},
+ {id:"C4",c:"Input-data relevance and representativeness check",r:"The data used matches the intended purpose and the candidate population actually applying. This duty applies to Annex III high-risk systems from 2 December 2027, so the row below is a readiness gap against that date, not a duty contravened today.",src:"Art. 26(4), Regulation (EU) 2024/1689",st:"warn",stl:"Partial",doc:"Vendor’s 2025 general fairness audit on file; no Stavenhorst-specific validation yet against the DE/NL applicant mix",o:"Priya Nair",lv:"2026-06-15 (vendor audit only)",nr:"2026-11-15",nrn:"voluntary readiness target",gap:true,gapn:"readiness gap · in the gap list",appl:APPL_FUT},
+ {id:"C5",c:"Monitoring of operation and outcomes",r:"Operation and outcome patterns are reviewed on an agreed cadence.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Quarterly ranking-distribution review · Q2 2026 report",o:"Priya Nair",lv:"2026-08-31",nr:"2026-11-30",appl:APPL_FUT},
+ {id:"C6",c:"Logging and log retention",r:"Automatically generated logs are kept for at least the statutory minimum of six months.",src:"Art. 26(6), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"Log retention config: 12 months, exceeds the minimum",o:"Priya Nair",lv:"2026-09-01",nr:"2027-03-01",appl:APPL_FUT},
+ {id:"C7",c:"Candidate information / transparency notice",r:"Candidates are told an AI system is used before they apply. Two limbs with two dates: the GDPR Art. 13 fair-processing duty applies now, and the AI Act Art. 26(11) deployer duty applies from 2 December 2027. The row is evidenced on both.",src:"Art. 26(11), Reg. (EU) 2024/1689 · Art. 13, Reg. (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"Careers-page notice v3 · application-form notice",o:"Sabine Hoffmann",lv:"2026-06-10",nr:"2027-06-10",appl:{live:true,t:"GDPR now · Art. 26(11) from 2027-12-02"}},
+ {id:"C8",c:"Route for a candidate to contest or request review",r:"A candidate can ask for a human explanation or review of an AI-influenced outcome.",src:"Art. 86(1), Regulation (EU) 2024/1689",st:"ok",stl:"Evidenced",doc:"recruiting-review@stavenhorst-logistik.example intake process · SLA 10 business days",o:"Sabine Hoffmann",lv:"2026-07-01",nr:"2027-01-01",appl:{live:false,t:"Art. 86(1) · from 2027-12-02"}},
+ {id:"C9",c:"Incident escalation path",r:"There is a defined path for AI-specific hiring incidents — suspected bias, wrong output — with a trigger, an owner and an SLA. The Art. 26(5) monitoring duty applies to Annex III high-risk systems from 2 December 2027, so this is a readiness gap against that date; the operational risk of an incident with no owner exists today regardless, which is why it keeps High severity.",src:"Art. 26(5), Regulation (EU) 2024/1689",st:"bad",stl:"Missing",doc:"General IT incident process exists, but it has no AI-specific trigger, owner or SLA",o:"Sabine Hoffmann",lv:"—",nr:"2026-10-31",nrn:"voluntary readiness target",gap:true,gapn:"readiness gap · in the gap list",appl:APPL_FUT},
+ {id:"C10",c:"Works-council information / consultation record (DE entity)",r:"The works council was informed and consulted before deployment, under national co-determination rights. This record is evidence that can serve the Art. 26(7) duty (C13); it is not that duty — C13 is owed whether or not a works council exists. This national-law duty is live today, independent of the AI Act’s 2 December 2027 date.",src:"Betriebsverfassungsgesetz (DE) §87(1) No. 6 — national law, tracked separately from the EU provisions",st:"warn",stl:"Partial",doc:"Betriebsrat informed 2026-05-20 (minutes on file); no signed Betriebsvereinbarung yet; NL Ondernemingsraad consent process under WOR Art. 27(1) not yet started",o:"Jonas Reiter (Betriebsrat chair) / Sabine Hoffmann",lv:"2026-05-20 (DE, informal only)",nr:"2026-12-01",nrn:"voluntary internal target",gap:true,gapn:"live gap · in the gap list",appl:{live:true,t:"National law · applies now"}},
+ {id:"C11",c:"DPIA reference",r:"A data-protection impact assessment has been carried out and is on file.",src:"Art. 35(1), (3)(a), Regulation (EU) 2016/679",st:"ok",stl:"Evidenced",doc:"DPIA-2026-014",o:"Lukas Bergmann (external DPO)",lv:"2026-08-20",nr:"2027-08-20",appl:{live:true,t:"GDPR · applies now"}},
+ {id:"C12",c:"Retention and deletion",r:"Candidate data is deleted on a defined schedule.",src:"Art. 5(1)(e), Reg. (EU) 2016/679 · retention period also informed by German AGG claim-limitation practice (national law)",st:"ok",stl:"Evidenced",doc:"Retention rule: 6 months after role close · automated purge job PJ-114",o:"Priya Nair",lv:"2026-09-05",nr:"2027-03-05",appl:{live:true,t:"GDPR + national · apply now"}},
+ {id:"C13",c:"Prior information to workers’ representatives and affected workers",r:"Before the system is put into use at the workplace, workers’ representatives and the affected workers are informed that they will be subject to a high-risk AI system. This is an EU duty owed whether or not a works council exists; the national co-determination record (C10) is evidence that can serve it, but it is not the duty itself. It applies to Annex III high-risk systems from 2 December 2027. TalentSieve went to production on 2026-06-15, well before that date, so prior information in the literal “before the system is put into use” sense cannot be given for this deployment — which is why the row is a readiness gap with a plan attached rather than a breach.",src:"Art. 26(7), Regulation (EU) 2024/1689",st:"warn",stl:"Partial",doc:"No Art. 26(7) workforce notice on file. The candidate notice (C7) covers external candidates under Art. 26(11), not the existing workforce; the DE Betriebsrat briefing of 2026-05-20 (C10) is a national co-determination record, not this notice. Readiness plan: inform both entities’ workforces ahead of 2027-12-02 and record the date",o:"Sabine Hoffmann",lv:"2026-06-10 (candidate notice only)",nr:"2026-11-07",nrn:"voluntary readiness target",gap:true,gapn:"readiness gap · in the gap list",appl:APPL_FUT}
 ];
 
+/* `appl` as on CONTROLS; `duen` qualifies the target date, because on an Art. 26
+   row the date is a voluntary internal target, not a statutory deadline. */
 var GAPS=[
- {g:"No AI-specific incident escalation path",ctl:"C9",uc:"UC-001 CV screening",ucs:"both entities",sev:"high",sevl:"High",o:"Sabine Hoffmann",or:"Group Head of HR",due:"2026-10-31",st:"Open",
-  why:"Without a defined trigger and SLA, a suspected-bias or wrong-output event can sit in the general IT queue past the point where it is still affecting live candidates. That undermines the monitoring duty in practice, not just on paper.",src:"Art. 26(5), Regulation (EU) 2024/1689"},
- {g:"Interview-scoring pilot has no named human overseer",ctl:"—",uc:"UC-003 Interview scoring",ucs:"NL, pilot",sev:"high",sevl:"High",o:"Tomasz Werner",or:"Recruiting Lead, NL",due:"2026-10-20",st:"Open",
-  why:"The pilot has been running since August with no natural person assigned to oversee it. A pilot is still putting the system into service, and the oversight duty attaches at that point.",src:"Art. 26(2), Regulation (EU) 2024/1689"},
- {g:"DE works agreement not signed; NL works-council consent not yet sought",ctl:"C10",uc:"UC-001 CV screening",ucs:"DE + NL",sev:"mh",sevl:"Medium-high",o:"Jonas Reiter / Sabine Hoffmann",or:"Betriebsrat chair / Group Head of HR",due:"2026-12-01",st:"Open",
-  why:"Deploying a system that evaluates candidate-facing outcomes without completing co-determination is a national-law exposure independent of AI Act status, and it undermines the credibility of the “workers’ representatives were informed” evidence.",src:"BetrVG §87(1) No. 6 (DE) · WOR Art. 27(1) (NL) · Art. 26(7), Reg. (EU) 2024/1689"},
- {g:"No group-specific input-data representativeness validation",ctl:"C4",uc:"UC-001 CV screening",ucs:"both entities",sev:"medium",sevl:"Medium",o:"Priya Nair",or:"Group IT Systems Owner",due:"2026-11-15",st:"Open",
-  why:"Relying only on the vendor’s general 2025 audit does not show the model performs consistently across your actual DE/NL applicant mix, where language and education-system variation differ. The duty attaches to the deployer, not only the provider.",src:"Art. 26(4), Regulation (EU) 2024/1689"},
- {g:"Vendor instructions for use not on file",ctl:"—",uc:"UC-002 Shift optimisation",ucs:"DE entity",sev:"low",sevl:"Low",o:"Frank Oelkers",or:"Warehouse Operations Manager",due:"2026-11-03",st:"Open",
-  why:"This use case has not been triaged yet, so whether the full deployer duty set applies is still open. Either way the vendor’s instructions belong on file before the triage can be completed.",src:"Art. 26(1), Regulation (EU) 2024/1689"},
+ {g:"No AI-specific incident escalation path",ctl:"C9",uc:"UC-001 CV screening",ucs:"both entities",sev:"high",sevl:"High",o:"Sabine Hoffmann",or:"Group Head of HR",due:"2026-10-31",duen:"voluntary readiness target",st:"Open",
+  appl:{live:false,t:"AI Act Art. 26 · readiness gap against 2027-12-02"},
+  why:"Without a defined trigger and SLA, a suspected-bias or wrong-output event can sit in the general IT queue past the point where it is still affecting live candidates. This is a readiness gap against the Art. 26(5) monitoring duty, which applies to Annex III high-risk systems from 2 December 2027 — not a current contravention — but the underlying operational risk, an incident with no owner and no SLA, exists today regardless of that date. That is why it keeps High severity.",src:"Art. 26(5), Regulation (EU) 2024/1689 — applies from 2027-12-02"},
+ {g:"Interview-scoring pilot has no named human overseer",ctl:"—",uc:"UC-003 Interview scoring",ucs:"NL, pilot",sev:"high",sevl:"High",o:"Tomasz Werner",or:"Recruiting Lead, NL",due:"2026-10-20",duen:"voluntary readiness target",st:"Open",
+  appl:{live:false,t:"AI Act Art. 26 · readiness gap against 2027-12-02"},
+  why:"The pilot has been running since August with no natural person assigned to oversee it. Putting a system into service is the act the Art. 26(2) oversight duty attaches to, and a pilot counts — but that duty applies to Annex III high-risk systems from 2 December 2027, so this is a readiness gap, not a contravention today. It is rated High anyway because the pilot is already scoring real candidates in the NL entity with nobody accountable for the output.",src:"Art. 26(2), Regulation (EU) 2024/1689 — applies from 2027-12-02"},
+ {g:"DE works agreement (Betriebsvereinbarung) not yet signed; NL OR consent not yet sought",ctl:"C10",uc:"UC-001 CV screening",ucs:"DE + NL",sev:"mh",sevl:"Medium-high",o:"Jonas Reiter / Sabine Hoffmann",or:"Betriebsrat chair / Group Head of HR",due:"2026-12-01",duen:"voluntary internal target",st:"Open",
+  appl:{live:true,t:"National law · live exposure today"},
+  why:"Deploying a system that monitors and evaluates candidate-facing outcomes without completing co-determination is a national-law exposure that is live today, independent of the AI Act’s 2 December 2027 application date for Art. 26. This is the one UC-001 gap that bites now. It also limits the credibility of any future Art. 26(7) workforce-notice evidence (C13) — though the co-determination record is evidence that can serve that duty, not the duty itself; that duty is tracked separately as C13 and is owed whether or not a works council exists.",src:"BetrVG §87(1) No. 6 (DE) · WOR Art. 27(1) (NL) — national law, applicable now"},
+ {g:"Workforce cannot be given Art. 26(7) prior information for an already-deployed system",ctl:"C13",uc:"UC-001 CV screening",ucs:"both entities",sev:"medium",sevl:"Medium",o:"Sabine Hoffmann",or:"Group Head of HR",due:"2026-11-07",duen:"voluntary readiness target",st:"Open",
+  appl:{live:false,t:"AI Act Art. 26 · readiness gap against 2027-12-02"},
+  why:"Art. 26(7) requires workers’ representatives and the affected workers to be informed before a high-risk AI system is put into use at the workplace; this duty attaches to Annex III high-risk systems from 2 December 2027. TalentSieve is already in production (go-live 2026-06-15), so literal prior information cannot be given for this deployment. The candidate notice (C7) covers external candidates under Art. 26(11), not the existing workforce, and the Betriebsrat briefing (C10) is a national co-determination record, not the Art. 26(7) notice itself. Readiness plan: inform both entities’ workforces ahead of 2 December 2027 and record the date on which this is done. Rated Medium, not High: the duty does not bind for over a year, there is no live breach today, and this is rated deliberately below C10 — C10 is a live national-law exposure now, C13 is a future EU readiness item.",src:"Art. 26(7), Regulation (EU) 2024/1689 — applies from 2027-12-02"},
+ {g:"No Stavenhorst-specific input-data representativeness validation",ctl:"C4",uc:"UC-001 CV screening",ucs:"both entities",sev:"medium",sevl:"Medium",o:"Priya Nair",or:"Group IT Systems Owner",due:"2026-11-15",duen:"voluntary readiness target",st:"Open",
+  appl:{live:false,t:"AI Act Art. 26 · readiness gap against 2027-12-02"},
+  why:"Relying solely on the vendor’s general 2025 audit does not confirm the model performs consistently across Stavenhorst’s actual DE/NL applicant mix, where language and education-system variation differ. This is a readiness gap against the Art. 26(4) duty, which applies to Annex III high-risk systems from 2 December 2027, not a current contravention. When it does apply, it attaches to the deployer, not only the provider — which is why the vendor’s own audit will not close it.",src:"Art. 26(4), Regulation (EU) 2024/1689 — applies from 2027-12-02"},
+ {g:"Vendor instructions for use not on file",ctl:"—",uc:"UC-002 Shift optimisation",ucs:"DE entity",sev:"low",sevl:"Low",o:"Frank Oelkers",or:"Warehouse Operations Manager",due:"2026-11-03",duen:"voluntary readiness target",st:"Open",
+  appl:{live:false,t:"AI Act Art. 26 · readiness gap against 2027-12-02"},
+  why:"This use case has not been triaged yet, so whether the deployer duty set reaches it at all is still open — that is a triage question, not a timing one. Separately, the Art. 26 duties apply to Annex III high-risk systems from 2 December 2027, so nothing here is contravened today. Either way the vendor’s instructions belong on file before the triage can be completed.",src:"Art. 26(1), Regulation (EU) 2024/1689 — applies from 2027-12-02"},
  {g:"No DPIA reference for performance analytics",ctl:"—",uc:"UC-004 Performance analytics",ucs:"both entities",sev:"low",sevl:"Low",o:"Lukas Bergmann",or:"External Data Protection Officer",due:"2026-11-28",st:"Open",
-  why:"Systematic evaluation of employee performance is likely to require a DPIA. The assessment may well exist in the DPO’s own files; the register holds no reference to it, and that missing reference is itself the gap.",src:"Art. 35(3)(a), Regulation (EU) 2016/679"}
+  appl:{live:true,t:"GDPR · live exposure today"},
+  why:"Systematic evaluation of employee performance is likely to require a DPIA. This one is GDPR, which applies now and is unaffected by the AI Act timeline change — unlike the Art. 26 rows above it, the date here is a real one. The assessment may well exist in the DPO’s own files; the register holds no reference to it, and that missing reference is itself the gap.",src:"Art. 35(3)(a), Regulation (EU) 2016/679 — applicable now"}
 ];
 
+/* Append-only: historical entries keep the rule-pack version that was current when
+   they were written. Only the 2026-10-07 correction entry carries EU-EMPL-2026.10. */
 var ACTS=[
- {w:"2026-09-28",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09"},
- {w:"2026-09-28",k:"rule",t:"<b>Sabine Hoffmann</b> applied rule pack <b>EU-EMPL-2026.09</b> and reviewed the gap list",s:"Three open items (C4, C9, C10) accepted with target dates"},
+ {w:"2026-10-07",k:"rule",t:"<b>Sabine Hoffmann</b> applied rule pack <b>EU-EMPL-2026.10</b> — AI Act Art. 26 deployer-duty application date corrected to <b>2027-12-02</b>",s:"Digital Omnibus, in force 2026-07-27 · C4, C9 and C13 re-framed from contravention to readiness-gap framing and their target dates relabelled as voluntary · C13 severity reassessed from High to Medium on that basis · C10 confirmed unaffected and still live national law · open-item count unchanged at four (C4, C9, C10, C13) · sources re-checked 2026-10-07"},
+ {w:"2026-09-28",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 4 gaps flagged · rule pack EU-EMPL-2026.09"},
+ {w:"2026-09-28",k:"rule",t:"<b>Sabine Hoffmann</b> applied rule pack <b>EU-EMPL-2026.09</b> and reviewed the gap list",s:"Four open items (C4, C9, C10, C13) accepted with target dates"},
  {w:"2026-09-26",k:"confirm",t:"<b>Almuth Cordes</b> (employment counsel) confirmed triage questions 2, 3 and 6",s:"High-risk employment use — indicative · Art. 27 FRIA confirmed as not applicable to this deployer"},
  {w:"2026-09-25",k:"confirm",t:"<b>Lukas Bergmann</b> (external DPO) confirmed question 4 (transparency) and the question 5 DPIA trigger",s:"Art. 22 sole-automation characterisation referred to counsel and recorded as unsettled"},
  {w:"2026-09-24",k:"confirm",t:"<b>Priya Nair</b> confirmed question 1 — TalentSieve is an AI system within scope",s:"Art. 3(1) · rule pack EU-EMPL-2026.09"},
@@ -849,6 +917,18 @@ var PATH=[["register","1 Register"],["usecase","2 Use case"],["triage","3 Triage
 /* ---------------- render ---------------- */
 function esc(s){return String(s).replace(/&(?!(amp|lt|gt|#\d+|#x[0-9a-fA-F]+);)/g,"&amp;").replace(/</g,"&lt;")}
 
+/* Applicability marker. The glyph is decorative; the words carry the meaning, so
+   colour is never the only signal. A visually-hidden prefix states the asymmetry
+   in words for a screen reader, because "applies now" sitting next to "Partial"
+   is the whole point of the row and must not depend on the brand tint. */
+function applHTML(a){
+  if(!a)return "";
+  return '<span class="appl'+(a.live?' live':'')+'">'+
+    '<span class="gl" aria-hidden="true">'+(a.live?"&#9679;":"&#9675;")+'</span>'+
+    '<span class="vh">'+(a.live?"Applicable now. ":"Not applicable yet. ")+'</span>'+
+    esc(a.t)+'</span>';
+}
+
 /* evidence table */
 (function(){
   var h="";
@@ -856,11 +936,13 @@ function esc(s){return String(s).replace(/&(?!(amp|lt|gt|#\d+|#x[0-9a-fA-F]+);)/
     h+='<tr>'+
       '<td><span class="t1"><span style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px">'+c.id+'</span>'+esc(c.c)+'</span>'+
         '<details class="cite"><summary>What this asks for</summary><div class="body">'+esc(c.r)+'<span class="src">'+esc(c.src)+'</span></div></details></td>'+
-      '<td><span class="pill '+c.st+'">'+c.stl+'</span>'+(c.gap?'<span class="t2">in the gap list</span>':'')+'</td>'+
+      '<td style="min-width:17ch;max-width:21ch"><span class="pill '+c.st+'">'+c.stl+'</span>'+
+        (c.gap?'<span class="t2">'+esc(c.gapn||"in the gap list")+'</span>':'')+
+        applHTML(c.appl)+'</td>'+
       '<td style="max-width:30ch"><span class="t2" style="margin-top:0">'+esc(c.doc)+'</span></td>'+
       '<td><span class="t2" style="margin-top:0">'+esc(c.o)+'</span></td>'+
       '<td><span class="num">'+esc(c.lv)+'</span></td>'+
-      '<td><span class="num">'+esc(c.nr)+'</span></td>'+
+      '<td><span class="num">'+esc(c.nr)+'</span>'+(c.nrn?'<span class="t2">'+esc(c.nrn)+'</span>':'')+'</td>'+
     '</tr>';
   }
   document.getElementById("tb-ev").innerHTML=h;
@@ -872,11 +954,12 @@ function esc(s){return String(s).replace(/&(?!(amp|lt|gt|#\d+|#x[0-9a-fA-F]+);)/
   for(var i=0;i<GAPS.length;i++){var g=GAPS[i];
     h+='<tr>'+
       '<td style="max-width:46ch"><span class="t1">'+esc(g.g)+'</span>'+
+        applHTML(g.appl)+
         '<details class="cite"><summary>Why it matters</summary><div class="body">'+esc(g.why)+'<span class="src">'+esc(g.src)+'</span></div></details></td>'+
       '<td><span class="t2" style="margin-top:0">'+esc(g.uc)+'<br>'+esc(g.ucs)+(g.ctl!=="—"?' · '+g.ctl:'')+'</span></td>'+
       '<td><span class="pill '+(g.sev==="high"?"bad":g.sev==="mh"?"mh":g.sev==="medium"?"warn":"neu")+'">'+g.sevl+'</span></td>'+
       '<td><span class="t1">'+esc(g.o)+'</span><span class="t2">'+esc(g.or)+'</span></td>'+
-      '<td><span class="num">'+esc(g.due)+'</span></td>'+
+      '<td><span class="num">'+esc(g.due)+'</span>'+(g.duen?'<span class="t2">'+esc(g.duen)+'</span>':'')+'</td>'+
       '<td><span class="pill neu">'+esc(g.st)+'</span></td>'+
     '</tr>';
   }
@@ -922,7 +1005,8 @@ function stepHTML(){
          '<span class="ox" aria-hidden="true"></span><span>'+esc(s.ans[i])+'</span></div>';
     }
     h+='</div>'+
-      '<div class="ind"><span aria-hidden="true">→</span><span><b>'+esc(s.ind)+'</b> This is an indicative result produced by rule pack EU-EMPL-2026.09. It is not legal advice and is not final until a named person confirms it.'+
+      '<div class="ind"><span aria-hidden="true">→</span><span><b>'+esc(s.ind)+'</b> This is an indicative result produced by rule pack EU-EMPL-2026.10. It is not legal advice and is not final until a named person confirms it.'+
+        '<span style="display:block">'+applHTML(s.appl)+'</span>'+
         '<details class="cite"><summary>Show the provision this relies on</summary><div class="body">'+esc(s.cite)+'<span class="src">'+esc(s.src)+'</span></div></details>'+
         '<span class="t2" style="display:block;color:var(--muted);font-size:12px;margin-top:8px">'+s.by+'</span></span></div>'+
       '<div class="navrow">'+
@@ -937,16 +1021,17 @@ function stepHTML(){
   return '<div class="step">'+
     '<p class="crumb">Result</p>'+
     '<h2>Indicative result for UC-001</h2>'+
-    '<div class="alert bad" style="margin:0 0 16px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use — indicative.</b> A recruitment and selection system that analyses and filters job applications falls in the Annex III point 4(a) employment category. Indicative means exactly that: produced by rule pack EU-EMPL-2026.09 from the answers above, not a legal opinion, not a conformity assessment, and not binding on anyone.<span class="provs" style="margin-top:8px"><span class="p">Art. 6(2)</span><span class="p">Annex III 4(a)</span><span class="p">Art. 26</span><span class="p">Art. 86(1)</span><span class="p">GDPR Art. 22</span><span class="p">GDPR Art. 35</span></span></span></div>'+
+    '<div class="alert bad" style="margin:0 0 16px"><span class="ai" aria-hidden="true">!</span><span><b>High-risk employment use — indicative.</b> A recruitment and selection system that analyses and filters job applications falls in the Annex III point 4(a) employment category. Indicative means exactly that: produced by rule pack EU-EMPL-2026.10 from the answers above, not a legal opinion, not a conformity assessment, and not binding on anyone. <b>The classification holds today; the Art. 26 deployer duties it pulls in apply from 2 December 2027.</b> The tracks below do not share a date — that is why they are shown as separate tracks.<span class="provs" style="margin-top:8px"><span class="p">Art. 6(2)</span><span class="p">Annex III 4(a)</span><span class="p">Art. 26</span><span class="p">Art. 86(1)</span><span class="p">GDPR Art. 22</span><span class="p">GDPR Art. 35</span></span></span></div>'+
     '<div class="tracks">'+
-      '<div class="track"><h3>AI Act deployer duties</h3><ul><li>Use as instructed · Art. 26(1)</li><li>Named human oversight · Art. 26(2)</li><li>Input data you control · Art. 26(4)</li><li>Monitoring · Art. 26(5)</li><li>Logs, min. 6 months · Art. 26(6)</li><li>Inform workers’ representatives · Art. 26(7)</li><li>Inform candidates · Art. 26(11)</li></ul></div>'+
-      '<div class="track"><h3>GDPR — separate track</h3><ul><li>DPIA carried out · Art. 35(3)(a) — DPIA-2026-014</li><li>Candidate information · Art. 13</li><li>Retention · Art. 5(1)(e)</li><li><b>Art. 22 sole-automation: unsettled</b> — referred to counsel, not answered here</li></ul></div>'+
-      '<div class="track"><h3>Works-council duties — national law</h3><ul><li>DE: BetrVG §87(1) No. 6 — Betriebsrat informed 2026-05-20, works agreement not yet signed</li><li>NL: WOR Art. 27(1) — Ondernemingsraad consent not yet sought; the exact sub-point is unsettled</li></ul></div>'+
-      '<div class="track"><h3>Art. 27 FRIA</h3><ul><li><b>Not applicable to you</b> for this use case · Art. 27(1)</li><li>You are a private logistics operator, not a public body or public-service provider, and this is not a credit or insurance system</li><li>Re-run if either of those changes</li></ul></div>'+
+      '<div class="track"><h3>AI Act deployer duties</h3>'+applHTML({live:false,t:"Apply from 2027-12-02"})+'<ul><li>Use as instructed · Art. 26(1)</li><li>Named human oversight · Art. 26(2)</li><li>Input data you control · Art. 26(4)</li><li>Monitoring · Art. 26(5)</li><li>Logs, min. 6 months · Art. 26(6)</li><li>Inform workers’ representatives · Art. 26(7)</li><li>Inform candidates · Art. 26(11)</li><li>Candidate route to an explanation · Art. 86(1)</li></ul><p style="margin:8px 0 0;font-size:12px;line-height:18px;color:var(--muted)">Annex III high-risk rules apply from 2 December 2027 (Digital Omnibus, in force 27 July 2026). Until then these are readiness items, and the register’s target dates against them are voluntary.</p></div>'+
+      '<div class="track"><h3>GDPR — separate track</h3>'+applHTML({live:true,t:"Applies now"})+'<ul><li>DPIA carried out · Art. 35(3)(a) — DPIA-2026-014</li><li>Candidate information · Art. 13</li><li>Retention · Art. 5(1)(e)</li><li><b>Art. 22 sole-automation: unsettled</b> — referred to counsel, not answered here</li></ul><p style="margin:8px 0 0;font-size:12px;line-height:18px;color:var(--muted)">Unaffected by the AI Act timeline change. These duties are owed today.</p></div>'+
+      '<div class="track"><h3>Works-council duties — national law</h3>'+applHTML({live:true,t:"Applies now"})+'<ul><li>DE: BetrVG §87(1) No. 6 — Betriebsrat informed 2026-05-20, works agreement not yet signed</li><li>NL: WOR Art. 27(1) — Ondernemingsraad consent not yet sought; the exact sub-point is unsettled</li></ul><p style="margin:8px 0 0;font-size:12px;line-height:18px;color:var(--muted)">National law, not an EU Regulation, and live today. This is the track with an open exposure right now — control C10.</p></div>'+
+      '<div class="track"><h3>Art. 5 prohibited practices</h3>'+applHTML({live:true,t:"In force since 2025-02-02"})+'<ul><li>Emotion inference in the workplace · Art. 5(1)(f) — <b>not engaged</b> by the deployed configuration</li><li>The video-sentiment add-on was evaluated and not purchased; that decision is the evidence</li><li>Re-run question 3 <i>before</i> the add-on is ever purchased</li></ul><p style="margin:8px 0 0;font-size:12px;line-height:18px;color:var(--muted)">This is the one duty on the walkthrough that is enforceable today. The 2 December 2027 extension does not touch Art. 5.</p></div>'+
+      '<div class="track"><h3>Art. 27 FRIA</h3>'+applHTML({live:false,t:"Not applicable to this deployer"})+'<ul><li><b>Not applicable to you</b> for this use case · Art. 27(1)</li><li>You are a private logistics operator, not a public body or public-service provider, and this is not a credit or insurance system</li><li>Re-run if either of those changes</li></ul></div>'+
     '</div>'+
     '<div class="alert warn" style="margin-top:16px"><span class="ai" aria-hidden="true">▲</span><span><b>One open question, recorded as unsettled.</b> Whether the recruiter-review step is &#8220;meaningful&#8221; enough to put the output outside GDPR Art. 22(1) is not resolved here. It is recorded as referred to counsel by Lukas Bergmann on 2026-09-25, and it prints in the evidence pack as an open question rather than as an answer.</span></div>'+
     (confirmed
-      ? '<div class="stamp"><span class="ai" aria-hidden="true">✓</span><span><b>Confirmed by Sabine Hoffmann, Group Head of HR — 2026-10-02 14:20 CET.</b><br>Recorded against rule pack EU-EMPL-2026.09 with one open question referred to counsel. Written to the append-only <a href="#activity">activity history</a>; it can be superseded by a new confirmation but not erased.</span></div>'+
+      ? '<div class="stamp"><span class="ai" aria-hidden="true">✓</span><span><b>Confirmed by Sabine Hoffmann, Group Head of HR — 2026-10-07 14:20 CET.</b><br>Recorded against rule pack EU-EMPL-2026.10 with one open question referred to counsel. Written to the append-only <a href="#activity">activity history</a>; it can be superseded by a new confirmation but not erased.</span></div>'+
         '<div class="navrow"><button class="btn" data-nav-step="0">Review the questions again</button><button class="btn pri" data-go="evidence">Go to the evidence checklist</button></div>'
       : '<div class="confirm"><label><input type="checkbox" id="ack"><span>I have read the indicative result and the provisions it relies on. I am confirming this classification as the responsible named person for this use case, on the understanding that it is operational evidence and <b>not legal advice</b>, and that the open question above remains with counsel.</span></label>'+
         '<div class="navrow" style="margin-top:14px"><button class="btn pri" id="doconf" disabled>Confirm as Sabine Hoffmann, Group Head of HR</button><span style="font-size:12.5px;color:var(--muted)">A confirmation always carries a name, a role and a timestamp. The tool never confirms on your behalf.</span></div></div>')+
@@ -973,7 +1058,7 @@ document.addEventListener("click",function(e){
 
   if(t.id==="doconf"){
     confirmed=true;
-    ACTS.unshift({w:"2026-10-02",k:"confirm",t:"<b>Sabine Hoffmann</b> (Group Head of HR) confirmed the employment triage for UC-001 as <b>high-risk employment use — indicative</b>",s:"Rule pack EU-EMPL-2026.09 · one open question referred to counsel"});
+    ACTS.unshift({w:"2026-10-07",k:"confirm",t:"<b>Sabine Hoffmann</b> (Group Head of HR) confirmed the employment triage for UC-001 as <b>high-risk employment use — indicative</b>",s:"Rule pack EU-EMPL-2026.10 · Art. 26 deployer duties apply from 2027-12-02 · one open question referred to counsel"});
     renderTL();paintTriage();return;
   }
 
@@ -1028,13 +1113,13 @@ document.getElementById("q-reg").addEventListener("input",function(){
 var gen=document.getElementById("gen"),prog=document.getElementById("prog"),msg=document.getElementById("genmsg"),gf=document.getElementById("genfile");
 gen.addEventListener("click",function(){
   gen.disabled=true;prog.hidden=false;gf.hidden=true;
-  msg.textContent="Collecting the register entry, the confirmed triage, 12 controls and 3 gaps…";
+  msg.textContent="Collecting the register entry, the confirmed triage, 13 controls and 4 gaps…";
   var bar=prog.querySelector("i");bar.style.width="0";
   setTimeout(function(){bar.style.width="55%";msg.textContent="Rendering the gap list and the activity history…"},60);
-  setTimeout(function(){bar.style.width="100%";msg.textContent="Pack generated from the register as it stands at 2026-10-02 14:26 CET."},700);
+  setTimeout(function(){bar.style.width="100%";msg.textContent="Pack generated from the register as it stands at 2026-10-07 14:26 CET."},700);
   setTimeout(function(){
     prog.hidden=true;gf.hidden=false;gen.disabled=false;
-    ACTS.unshift({w:"2026-10-02",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 3 gaps flagged · rule pack EU-EMPL-2026.09"});
+    ACTS.unshift({w:"2026-10-07",k:"export",t:"<b>Sabine Hoffmann</b> generated the evidence pack for UC-001",s:"7 pages · 4 gaps flagged · rule pack EU-EMPL-2026.10"});
     renderTL();
   },1250);
 });
